@@ -1,15 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\EmpleadoController;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome');
-})->name('home');
+// Ruta para el dashboard de productos
+Route::get('/dashboard', [ProductoController::class, 'index'])->name('dashboard');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+// Ruta para la vista de empleados
+Route::get('/empleados', [EmpleadoController::class, 'index'])->name('empleados');

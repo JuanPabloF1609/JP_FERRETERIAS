@@ -9,8 +9,11 @@ import { defineConfig } from 'vite';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/js/app.ts'],
-            ssr: 'resources/js/ssr.ts',
+            input: [
+                'resources/css/app.css', // Mantén esto si es necesario
+                'resources/css/dashboard.css', // Añade tu archivo CSS
+                'resources/js/app.js',
+            ],
             refresh: true,
         }),
         vue({

@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #2D3748;
+  --secondary-color: #4A5568;
+  --active-color: #38A169;
+  --warning-color: #DD6B20;
+  --danger-color: #E53E3E;
+  --border-color: #E2E8F0;
+  --text-color: #1A202C;
+  --light-bg: #F7FAFC;
+  --background-color: #F8F9FA;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Header con botón */
+.dashboard-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.dashboard-header {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+/* Botón crear */
+.create-button {
+  display: flex;
+  align-items: center;
+  background: var(--active-color);
+  color: white;
+  border-radius: 6px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  gap: 8px;
+}
+
+.create-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Estadísticas */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-title {
+  color: var(--secondary-color);
+  font-size: 13px;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.inventory-count {
+  color: var(--primary-color);
+}
+
+.low-stock-count {
+  color: var(--warning-color);
+}
+
+.inactive-count {
+  color: var(--danger-color);
+}
+
+.section-divider {
+  border-bottom: 1px solid var(--border-color);
+  margin: 24px 0;
+}
+
+/* Buscador */
+.search-container {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 24px;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 10px 12px;
+  flex-grow: 1;
+  font-size: 14px;
+}
+
+.search-button {
+  background: var(--primary-color);
+  color: white;
+  border-radius: 6px;
+  padding: 10px 16px;
+  margin-left: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.search-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Tabla */
+.products-table {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+.products-table th {
+  background: var(--light-bg);
+  color: var(--secondary-color);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  text-transform: uppercase;
+}
+
+.products-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 14px;
+}
+
+/* Estados */
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-active {
+  background: #EBF8F2;
+  color: var(--active-color);
+}
+
+/* Acciones */
+.action-link {
+  color: #3182CE;
+  margin-right: 12px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.action-link-danger {
+  color: var(--danger-color);
+}
+
+/* No resultados */
+.no-results {
+  text-align: center;
+  color: var(--secondary-color);
+  padding: 24px;
+  font-size: 14px;
+}
+.stat-card {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.stat-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.stat-icon {
+  background-color: #ff5b00;
+  border-radius: 50%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
+.stat-icon img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1); /* Asegura el ícono blanco sobre fondo naranja */
+}
