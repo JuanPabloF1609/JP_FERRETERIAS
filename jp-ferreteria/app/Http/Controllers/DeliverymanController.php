@@ -13,6 +13,6 @@ class DeliverymanController extends Controller
      */
     public function index()
     {
-        return view('Dashboard_delivery_man');
+        return view('delivery.index');
     }
 }

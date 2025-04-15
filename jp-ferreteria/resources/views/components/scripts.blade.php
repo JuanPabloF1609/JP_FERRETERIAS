@@ -6,6 +6,8 @@
     const topbar = document.getElementById('topbar');
     const bottombar = document.getElementById('bottombar');
     const btnEntregar = document.getElementById('btn-entregar');
+    const btnAyuda = document.getElementById('btn-ayuda');
+
 
     if (toggleBtn && closeBtn && sidebar && overlay) {
         const applyOverlay = () => {
@@ -37,6 +39,12 @@
             } else {
                 console.log('Entrega cancelada');
             }
+        });
+    }
+
+    if (btnAyuda) {
+        btnAyuda.addEventListener('click', () => {
+            introJs().start();
         });
     }
 </script>
