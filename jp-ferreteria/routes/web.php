@@ -9,3 +9,8 @@ Route::get('/dashboard', [ProductoController::class, 'index'])->name('dashboard'
 
 // Ruta para la vista de empleados
 Route::get('/empleados', [EmpleadoController::class, 'index'])->name('empleados');
+
+// Ruta para la vista de productos
+Route::get('/productos', [ProductoController::class, 'index'])->name('productos');
+
+
