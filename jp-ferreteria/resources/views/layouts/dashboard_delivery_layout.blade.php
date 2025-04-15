@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title', 'Dashboard')</title>
-    @vite('resources/css/app.css')
+    @vite('resources/css/app.css', 'resources/js/app.js')
+    <!-- Intro.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css" />
+    <!-- Intro.js JS -->
+    <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
 </head>
-<body class="bg-gray-100">
+<body class="body">
 
-    @include('partials.topbar')
-    @include('partials.sidebar')
-    @include('partials.overlay')
+    @include('components.topbar')
+    @include('components.sidebar')
+    @include('components.overlay')
 
     <!-- Contenido principal dinámico -->
-    <div class="pt-20 pb-20 flex justify-center">
+    <div class="main-content">
         @yield('content')
     </div>
 
-    @include('partials.bottombar')
-    @include('partials.scripts')
+    @include('components.bottombar')
+    @include('components.scripts')
 
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!-- Contenedor de orden en cola -->
-<div class="w-[260px] h-[350px] bg-white rounded-lg shadow-[0px_4px_8px_0px_rgba(0,0,0,0.10)] border border-neutral-200 p-4">
-    <h2 class="font-bold text-center mb-4">Orden en cola</h2>
-    <div class="bg-zinc-300 p-4 border rounded border-black">
+<div class="orden-cola-container">
+    <h2 class="orden-cola-title">Orden en cola</h2>
+    <div class="orden-cola-content">
         <p><strong>Nombre Cliente:</strong> Pepito</p>
         <p><strong>Dirección:</strong> Calle Aquella</p>
         <p><strong>Productos:</strong> 3</p>

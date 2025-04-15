@@ -14,11 +14,11 @@ Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard-delivery', [DeliverymanController::class, 'index'])->name('dashboard.delivery');
+Route::get('/delivery', [DeliverymanController::class, 'index'])->name('delivery.index');
 
-Route::get('/historico-delivery', function () {
-    return view('Historico_delivery_man');
-})->name('delivery.historico');
+Route::get('/historical', function () {
+    return view('historical.index');
+})->name('historical.index');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

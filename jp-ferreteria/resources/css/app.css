@@ -1,6 +1,11 @@
+@import './deliveryman/dashboard_delivery.css';
+@import './deliveryman/historical_delivery.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
 body,
 html {
