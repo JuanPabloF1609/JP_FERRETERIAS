@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DeliverymanController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\asdasd;
@@ -21,9 +22,19 @@ Route::get('/cashiermanager', function () {
     return view('cashiermanager');
 });
 
-
+Route::get('/', function () {
+    return Inertia::render('Welcome');
+})->name('home');
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/delivery', [DeliverymanController::class, 'index'])->name('delivery.index');
+
+Route::get('/historical', function () {
+    return view('historical.index');
+})->name('historical.index');
+
+require __DIR__.'/settings.php';
+require __DIR__.'/auth.php';

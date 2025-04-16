@@ -1,0 +1,11 @@
+.historico-container {
+    @apply bg-white w-[900px] rounded-[10px] p-6 shadow-md overflow-auto mt-10;
+}
+
+.historico-title {
+    @apply text-center text-xl font-bold mb-6;
+}
+
+.historico-item {
+    @apply border rounded p-4 bg-zinc-100;
+}
