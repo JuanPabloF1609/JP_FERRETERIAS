@@ -59,14 +59,29 @@ class UserSeeder extends Seeder
             'view_delivery_order', 'create_delivery_order', 'edit_delivery_order', 'disable_delivery_order',
         ]);
 
-        // Asignar permisos al rol de usuario
+        // Crear usuarios y asignar roles
         $adminUser = User::query()->create([
             'name' => 'Administrador',
             'email' => 'admin@admin.com',
             'password' => bcrypt('Password'),
             'email_verified_at' => now(),
         ]);
-
         $adminUser->assignRole($roleAdmin);
+
+        $cajaUser = User::query()->create([
+            'name' => 'Caja',
+            'email' => 'caja@caja.com',
+            'password' => bcrypt('Password'),
+            'email_verified_at' => now(),
+        ]);
+        $cajaUser->assignRole($roleCaja);
+
+        $domiciliarioUser = User::query()->create([
+            'name' => 'Domiciliario',
+            'email' => 'domi@domi.com',
+            'password' => bcrypt('Password'),
+            'email_verified_at' => now(),
+        ]);
+        $domiciliarioUser->assignRole($roleDomiciliario);
     }
 }
