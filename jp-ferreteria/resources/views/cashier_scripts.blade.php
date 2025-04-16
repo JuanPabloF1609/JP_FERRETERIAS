@@ -1,6 +1,8 @@
-<!--Contiene el bloque <script>-->
+<!-- Intro.js -->
+<script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
+
 <script>
-    // Alterna la visibilidad del sidebar y ajusta el contenido principal
+    // Sidebar toggle
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         const content = document.getElementById('main-content');
@@ -8,53 +10,59 @@
         content.classList.toggle('ml-56');
     }
 
-    // Muestra el modal de creación de venta
     function abrirModal() {
         document.getElementById('modalVenta').classList.remove('hidden');
     }
 
-    // Oculta el modal de creación de venta
     function cerrarModal() {
         document.getElementById('modalVenta').classList.add('hidden');
     }
 
-    // Muestra el modal de edición de venta
     function abrirModalEditar() {
         document.getElementById('modalEditar').classList.remove('hidden');
     }
 
-    // Oculta el modal de edición de venta
     function cerrarModalEditar() {
         document.getElementById('modalEditar').classList.add('hidden');
     }
 
-    // Simula la navegación al módulo de ventas
-    function irAVentas() {
-        console.log("Botón Ventas presionado");
-        alert("Botón Ventas presionado");
+    function iniciarTutorial() {
+        introJs().setOptions({
+            steps: [
+                {
+                    element: document.querySelector('[data-intro="crear-venta"]'),
+                    intro: "Aquí puedes crear una nueva venta."
+                },
+                {
+                    element: document.querySelector('[data-intro="buscar"]'),
+                    intro: "Este botón te permite buscar ventas por nombre o ID."
+                },
+                {
+                    element: document.querySelector('[data-intro="editar"]'),
+                    intro: "Usa este botón para editar una venta existente."
+                },
+                {
+                    element: document.querySelector('[data-intro="deshabilitar"]'),
+                    intro: "Este botón deshabilita una venta."
+                },
+                {
+                    element: document.querySelector('[data-intro="ventas"]'),
+                    intro: "Este botón abre el módulo de ventas."
+                },
+                {
+                    element: document.querySelector('[data-intro="catalogo"]'),
+                    intro: "Accede al catálogo desde aquí."
+                },
+                {
+                    element: document.querySelector('[data-intro="cerrar-sesion"]'),
+                    intro: "Cierra tu sesión desde este botón."
+                }
+            ],
+            nextLabel: 'Siguiente',
+            prevLabel: 'Anterior',
+            doneLabel: 'Finalizar'
+        }).start();
     }
 
-    // Simula la navegación al catálogo
-    function irACatalogo() {
-        console.log("Botón Catálogo presionado");
-        alert("Botón Catálogo presionado");
-    }
-
-    // Simula el cierre de sesión del usuario
-    function cerrarSesion() {
-        console.log("Botón Cerrar Sesión presionado");
-        alert("Botón Cerrar Sesión presionado");
-    }
-
-    // Simula la búsqueda de una venta
-    function buscarVenta() {
-        console.log("Botón Buscar presionado");
-        alert("Botón Buscar presionado");
-    }
-
-    // Simula la desactivación de una venta
-    function deshabilitarVenta() {
-        console.log("Botón Deshabilitar presionado");
-        alert("Botón Deshabilitar presionado");
-    }
+    // Ya no se ejecuta automáticamente
 </script>
