@@ -9,6 +9,7 @@ class EmpleadoController extends Controller
 {
     public function index()
     {
+        
         // Valores estáticos de prueba
         $activos = 7;
         $inactivos = 3;
