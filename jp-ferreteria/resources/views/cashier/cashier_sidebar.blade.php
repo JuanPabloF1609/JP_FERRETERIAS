@@ -2,7 +2,7 @@
 <div id="sidebar" class="bg-gray-300 w-56 min-h-screen p-4 space-y-4 fixed transform -translate-x-full transition-transform duration-300 ease-in-out z-20">
 
     <!-- Botón sección ventas -->
-    <a href="{{ route('dash_cashier') }}" data-intro="ventas" class="block w-full bg-[#83A5CE] text-white py-3 rounded text-lg text-center hover:bg-[#6B8BBF] transition-colors">
+    <a href="{{ route('cashier') }}" data-intro="ventas" class="block w-full bg-[#83A5CE] text-white py-3 rounded text-lg text-center hover:bg-[#6B8BBF] transition-colors">
         Dashboard
     </a>
 

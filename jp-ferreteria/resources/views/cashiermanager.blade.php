@@ -19,7 +19,7 @@
 
         <div class="bg-white rounded-xl shadow-xl p-6 w-full max-w-6xl mx-auto">
             <h1 class="text-2xl font-bold mb-6 text-center">Gestión de ventas</h1>
-
+            @can('view_bill')
             <div class="flex gap-4 mb-6 justify-center">
                 <div class="flex-1 border border-gray-400 rounded-xl p-4 flex flex-col items-center shadow-md bg-white">
                     <div class="text-green-600 text-3xl font-bold">$$</div>
@@ -33,9 +33,12 @@
                 </div>
             </div>
 
+
             <div class="flex items-center mb-4">
                 <input type="text" class="flex-1 py-2 px-4 bg-[#D9D9D9] rounded-lg" placeholder="Buscar venta por nombre de cliente o ID">
-                <button data-intro="buscar" class="bg-[#FF6200] text-white py-2 px-4 rounded ml-4 btn">Buscar</button>
+
+                    <button data-intro="buscar" class="bg-[#FF6200] text-white py-2 px-4 rounded ml-4 btn">Buscar</button>
+
             </div>
 
             <div class="overflow-auto">
@@ -48,7 +51,9 @@
                             <th class="border border-black p-4">Total</th>
                             <th class="border border-black p-4">Estado</th>
                             <th class="border border-black p-4">
-                                <button data-intro="crear-venta" onclick="abrirModal()" class="bg-[#FF6200] text-white px-4 py-2 rounded btn">Crear Venta</button>
+                                @can('create_bill')
+                                    <button data-intro="crear-venta" onclick="abrirModal()" class="bg-[#FF6200] text-white px-4 py-2 rounded btn">Crear Venta</button>
+                                @endcan
                             </th>
                         </tr>
                     </thead>
@@ -60,13 +65,24 @@
                             <td class="border border-black p-4">$350.000</td>
                             <td class="border border-black p-4">Activo</td>
                             <td class="border border-black p-4 space-x-2">
-                                <button data-intro="editar" onclick="abrirModalEditar()" class="bg-blue-500 text-white px-6 py-3 rounded btn">Editar</button>
-                                <button data-intro="deshabilitar" onclick="deshabilitarVenta()" class="bg-gray-700 text-white px-6 py-3 rounded btn">Deshabilitar</button>
+                                @can('edit_bill')
+                                    <button data-intro="editar" onclick="abrirModalEditar()" class="bg-blue-500 text-white px-6 py-3 rounded btn">Editar</button>
+                                @endcan
+                                @can('disable_bill')
+                                    <button data-intro="deshabilitar" onclick="deshabilitarVenta()" class="bg-gray-700 text-white px-6 py-3 rounded btn">Deshabilitar</button>
+                                @endcan
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            @else
+            <div class="no-permission-container">
+            <h2 class="text-red-500 text-xl font-bold">Acceso Denegado</h2>
+            <p class="text-gray-700">No tienes los permisos necesarios para acceder al historial de entregas.</p>
+            <p class="text-gray-700">Si crees que esto es un error, contacta al administrador del sistema.</p>
+            <a href="{{ route('dashboard') }}" class="btn btn-primary mt-4">Volver al Dashboard</a>
+        </div>            @endcan
         </div>
     </div>
 
