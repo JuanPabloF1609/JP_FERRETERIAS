@@ -5,41 +5,45 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\AdminController;
 
-// Ruta para el dashboard de productos
-Route::get('/dash_admin', [AdminController::class, 'index'])->name('admin_dashboard');
-
-// Ruta para la vista de empleados
-Route::get('/empleados', [EmpleadoController::class, 'index'])->name('empleados');
-
-// Ruta para la vista de productos
-Route::get('/productos', [ProductoController::class, 'index'])->name('productos');
-
-// Ruta para el dashboard de cashier
-Route::get('/dash_cashier', [CashierController::class, 'index'])->name('dash_cashier');
-
-// Ruta para la gestión de ventas del cashier
-Route::get('/cashiermanager', function () {
-    return view('cashiermanager');
-})->middleware('auth')->name('cashiermanager');
 
 // Redirigir la ruta raíz al login
 Route::get('/', function () {
     return redirect()->route('login');
 })->name('home');
 
-// Ruta para el dashboard (puedes mantenerla si la necesitas para otros roles)
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    
+Route::get('dashboard', function () {
+    return view('dashboard'); // Renderiza tu vista Blade personalizada
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/delivery', [DeliverymanController::class, 'index'])->name('delivery.index');
+// Ruta para los productos
+Route::get('/productos', [ProductoController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('productos');
 
+// Ruta para las órdenes
+Route::get('/delivery', [DeliverymanController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('delivery.index');
+
+// Ruta para el histórico
 Route::get('/historical', function () {
-    return view('historical.index');
-})->name('historical.index');
+    return view('historical.index'); // Cambia 'historical' por el nombre correcto de tu vista
+})->middleware(['auth', 'verified'])->name('historical.index');
 
+
+// Ruta para el dashboard del cajero
+Route::get('/cashier', [CashierController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('cashier');
+
+Route::get('/cashiermanager', function () {
+      return view('cashiermanager');
+})->middleware('auth')->name('cashiermanager');
+
+
+// Archivos adicionales de configuración
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

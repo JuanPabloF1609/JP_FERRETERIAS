@@ -23,6 +23,6 @@ class CashierController extends Controller
             ['nombre' => 'Algo', 'cantidad' => 150, 'precio' => 100, 'imagen' => 'https://via.placeholder.com/150'],
         ];
 
-        return view('cashier.dash_cashier', compact('productos'));
+        return view('cashier.index', compact('productos'));
     }
 }
