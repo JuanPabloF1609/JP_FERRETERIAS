@@ -6,7 +6,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\EmpleadoController;
 
 // Redirigir la ruta raíz al login
 Route::get('/', function () {
@@ -14,14 +14,18 @@ Route::get('/', function () {
 })->name('home');
 
     
-Route::get('dashboard', function () {
-    return view('dashboard'); // Renderiza tu vista Blade personalizada
+Route::get('dash_admin', function () {
+    return view('dash_admin'); // Renderiza tu vista Blade personalizada
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Ruta para los productos
 Route::get('/productos', [ProductoController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('productos');
+
+    Route::get('/empleados', [EmpleadoController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('empleados');
 
 // Ruta para las órdenes
 Route::get('/delivery', [DeliverymanController::class, 'index'])
