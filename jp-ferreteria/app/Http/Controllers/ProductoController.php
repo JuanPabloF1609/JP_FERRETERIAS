@@ -18,6 +18,6 @@ class ProductoController extends Controller
             'inactivos' => 3
         ];
 
-        return view('dashboard', compact('estadisticas'));
+        return view('producto', compact('estadisticas'));
     }
 }

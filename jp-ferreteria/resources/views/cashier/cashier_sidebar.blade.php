@@ -8,7 +8,7 @@
 
     <!-- Botón sección catálogo -->
     <a href="{{ route('cashiermanager') }}" data-intro="catalogo" class="block w-full bg-[#83A5CE] text-white py-3 rounded text-lg text-center hover:bg-[#6B8BBF] transition-colors">
-        Ventas
+        Catálogo
     </a>
 
     <!-- Botón cerrar sesión -->

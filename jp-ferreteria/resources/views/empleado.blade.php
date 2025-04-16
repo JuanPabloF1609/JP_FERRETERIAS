@@ -23,7 +23,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/dashboard">
+                        <a href="/productos">
                             <i class="fas fa-box"></i>
                             <span>Productos</span>
                         </a>
