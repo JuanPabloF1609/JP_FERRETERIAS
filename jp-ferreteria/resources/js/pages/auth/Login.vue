@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
-import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,6 +9,8 @@ import { LoaderCircle } from 'lucide-vue-next';
 defineProps<{
     status?: string;
     canResetPassword: boolean;
+    href: string;
+    tabindex: number | string;
 }>();
 
 const form = useForm({
@@ -81,22 +82,17 @@ const submit = () => {
                 </div>
 
                 <div class="mt-4 text-center text-sm text-gray-600">
-
-                    <TextLink
-                                v-if="canResetPassword"
-                                :href="route('password.request')"
-                                class="text-sm text-blue-600 hover:underline whitespace-nowrap"
-                                :tabindex="5"
-                            >
-                                ¿Olvidaste tu contraseña?
-                    </TextLink>
+                    
+                    <a :href="route('password.request')" class="text-blue-600 hover:underline" :tabindex="5">
+                        ¿Olvidaste tu contraseña?
+                    </a>
                 </div>
 
                 <div class="mt-4 text-center text-sm text-gray-600">
                     ¿No tienes una cuenta?
-                    <TextLink :href="route('register')" class="text-blue-600 hover:underline" :tabindex="5">
+                    <a :href="route('register')" class="text-blue-600 hover:underline" :tabindex="5">
                         Crear una cuenta
-                    </TextLink>
+                    </a>
                 </div>
             </form>
         </div>
