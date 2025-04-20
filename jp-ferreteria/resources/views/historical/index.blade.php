@@ -3,7 +3,7 @@
 @section('title', 'Historial de Entregas')
 
 @section('content')
-    @can('view_delivery_order')
+    @can('view_delivery_dashboard')
         <div class="historico-container">
             <h1 class="historico-title">Historial de Entregas</h1>
 
@@ -21,11 +21,6 @@
             </div>
         </div>
     @else
-        <div class="no-permission-container">
-            <h2 class="text-red-500 text-xl font-bold">Acceso Denegado</h2>
-            <p class="text-gray-700">No tienes los permisos necesarios para acceder al historial de entregas.</p>
-            <p class="text-gray-700">Si crees que esto es un error, contacta al administrador del sistema.</p>
-            <a href="{{ route('dashboard') }}" class="btn btn-primary mt-4">Volver al Dashboard</a>
-        </div>
+        @include('components.no_permission')
     @endcan
 @endsection

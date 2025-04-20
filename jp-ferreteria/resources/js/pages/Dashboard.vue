@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/AppLayout.vue';
-import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
-import PlaceholderPattern from '../components/PlaceholderPattern.vue';
+import { Head, Link } from '@inertiajs/vue3'; // Importamos Link de Inertia.js
 
-const breadcrumbs: BreadcrumbItem[] = [
+const breadcrumbs = [
     {
         title: 'Dashboard',
         href: '/dashboard',
@@ -15,22 +12,46 @@ const breadcrumbs: BreadcrumbItem[] = [
 <template>
     <Head title="Dashboard" />
 
-    <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-            <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
+    <div class="flex h-screen bg-gray-100">
+
+
+        <div class="flex-1 flex flex-col items-center justify-center bg-white shadow-lg rounded-lg mx-4 my-8">
+                    <!-- Botón de Cerrar Sesión -->
+            <div class="absolute top-10 right-6">
+                <Link class="flex items-center bg-red-500 font-semibold text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-400 transition duration-300 transform hover:scale-105" method="post" :href="route('logout')" as="button">
+                        Cerrar Sesión
+                </Link>
             </div>
-            <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border md:min-h-min">
-                <PlaceholderPattern />
+            <div class="text-center mb-6">
+                <h1 class="text-5xl font-extrabold text-gray-800 mb-4">🛠️Bienvenido a JP-Ferretería🛠️</h1>
+                <p class="text-lg text-gray-600">Tu sistema de gestión de ferretería</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <!-- Botón para Administrador -->
+
+                <a href="/dash_admin" class="flex flex-col items-center bg-gray-50 p-6 rounded-lg shadow-md text-gray-700 hover:bg-orange-500 hover:text-white transition duration-300 transform hover:scale-110">
+                    <h2 class="text-xl font-semibold">Administrador</h2>
+                    <p class="text-sm ">Accede al panel de administración</p>
+                </a>
+
+
+                <!-- Botón para Caja -->
+
+                <a href="/cashier" class="flex flex-col items-center bg-gray-50 p-6 rounded-lg shadow-md text-gray-700 hover:bg-green-500 hover:text-white transition duration-300 transform hover:scale-110">
+                    <h2 class="text-xl font-semibold">Caja</h2>
+                    <p class="text-sm ">Gestiona tus pedidos y ventas</p>
+                </a>
+
+
+                <!-- Botón para Domiciliario -->
+
+                <a href="/delivery" class="flex flex-col items-center bg-gray-50 p-6 rounded-lg shadow-md text-gray-700 hover:bg-blue-500 hover:text-white transition duration-300 transform hover:scale-110">
+                    <h2 class="text-xl font-semibold ">Repartidor</h2>
+                    <p class="text-sm">Gestiona tus órdenes de entrega</p>
+                </a>
+
             </div>
         </div>
-    </AppLayout>
+    </div>
 </template>

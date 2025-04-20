@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
     {
         // Crear permisos
         $permissions = [
-            'view_dashboard',
+            'view_admin_dashboard', 'view_caja_dashboard', 'view_delivery_dashboard',
 
             'view_users', 'create_users', 'edit_users', 'disable_users',
 
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
 
         // Asignar todos los permisos al rol admin
         $roleAdmin->syncPermissions([
-            'view_dashboard',
+            'view_admin_dashboard',
             'view_users', 'create_users', 'edit_users', 'disable_users',
             'view_products', 'create_products', 'edit_products', 'disable_products',
             'view_categories', 'create_categories', 'edit categories', 'disable_categories',
@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
 
         // Asignar permisos al rol caja
         $roleCaja->syncPermissions([
-            'view_dashboard',
+            'view_caja_dashboard',
             'view_bill', 'create_bill', 'edit_bill', 'disable_bill',
             'view_categories',
             'view_products',
@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
 
         // Asignar permisos al rol domiciliario
         $roleDomiciliario->syncPermissions([
-            'view_dashboard',
+            'view_delivery_dashboard',
             'view_bill',
             'view_delivery_order', 'create_delivery_order', 'edit_delivery_order', 'disable_delivery_order',
         ]);
