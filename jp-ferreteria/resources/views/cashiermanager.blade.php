@@ -69,7 +69,7 @@
                                     <button data-intro="editar" onclick="abrirModalEditar()" class="bg-blue-500 text-white px-6 py-3 rounded btn">Editar</button>
                                 @endcan
                                 @can('disable_bill')
-                                    <button data-intro="deshabilitar" onclick="deshabilitarVenta()" class="bg-gray-700 text-white px-6 py-3 rounded btn">Deshabilitar</button>
+                                    <button data-intro="deshabilitar" onclick="abrirModalDeshabilitar()" class="bg-gray-700 text-white px-6 py-3 rounded btn">Deshabilitar</button>
                                 @endcan
                             </td>
                         </tr>

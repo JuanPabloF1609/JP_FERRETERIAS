@@ -6,6 +6,8 @@
         <p><strong>Dirección:</strong> Calle Aquella</p>
         <p><strong>Productos:</strong> 3</p>
         <p><strong>Cantidad de Viajes:</strong> 1</p>
-        <p class="mt-2"><strong>Descripción:</strong> 4 tubos 4”, dos bultos de cemento, 20 metros de cerámica</p>
+        <p class="mt-2">
+            <strong>Descripción:</strong> 4 tubos 4”, dos bultos de cemento, 20 metros de cerámica
+        </p>
     </div>
 </div>

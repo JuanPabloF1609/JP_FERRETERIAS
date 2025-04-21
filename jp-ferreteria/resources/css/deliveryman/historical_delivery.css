@@ -9,3 +9,11 @@
 .historico-item {
     @apply border rounded p-4 bg-zinc-100;
 }
+
+.historico-pagination {
+    @apply flex justify-center mt-6;
+}
+
+.historico-pagination a {
+    @apply px-3 py-1 bg-gray-200 rounded hover:bg-gray-300;
+}

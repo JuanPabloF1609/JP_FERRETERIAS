@@ -36,3 +36,21 @@
         </form>
     </div>
 </div>
+
+<!-- Modal de confirmación para deshabilitar -->
+<div id="modalDeshabilitar" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30 hidden">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-xl font-bold mb-4 text-center text-red-600">Confirmar Deshabilitación</h2>
+        <p class="text-gray-700 mb-6 text-center">
+            ¿Estás seguro de que deseas deshabilitar esta venta? Esta acción no se puede deshacer.
+        </p>
+        <div class="flex justify-center gap-6">
+            <button onclick="confirmarDeshabilitar()" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700">
+                Confirmar
+            </button>
+            <button onclick="cerrarModalDeshabilitar()" class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600">
+                Cancelar
+            </button>
+        </div>
+    </div>
+</div>

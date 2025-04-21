@@ -11,7 +11,7 @@ class DeliverymanController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): \Illuminate\View\View
     {
         return view('delivery.index');
     }

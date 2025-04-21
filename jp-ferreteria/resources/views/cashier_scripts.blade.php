@@ -63,6 +63,20 @@
             doneLabel: 'Finalizar'
         }).start();
     }
+    
+    function abrirModalDeshabilitar() {
+        document.getElementById('modalDeshabilitar').classList.remove('hidden');
+    }
+
+    function cerrarModalDeshabilitar() {
+        document.getElementById('modalDeshabilitar').classList.add('hidden');
+    }
+
+    function confirmarDeshabilitar() {
+        alert('Venta deshabilitada con éxito.');
+        cerrarModalDeshabilitar();
+        // Aquí puedes agregar la lógica para deshabilitar la venta, como enviar una solicitud al servidor.
+    }
 
     // Ya no se ejecuta automáticamente
 </script>
