@@ -8,9 +8,14 @@
 </head>
 <body>
     <div class="wrapper">
+        <!-- Botón de hamburguesa fuera del sidebar -->
+        <button id="toggleSidebar" class="sidebar-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
         @include('components.sidebar_admin')
 
-        <main class="main-content">
+        <main class="main-content" id="mainContent">
             @yield('content')
         </main>
     </div>

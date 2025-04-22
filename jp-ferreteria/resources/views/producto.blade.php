@@ -4,8 +4,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Gestión de productos</h1>
-
+    <h1 class="text-3xl font-bold text-center mb-6">Gestión de productos</h1>
     @can('view_products')
     @include('components.stats_product')
     @include('components.search_admin')
@@ -41,13 +40,18 @@
         </table>
     </div>
     @else
-        <div class="no-permission-container">
-            <h2 class="text-red-500 text-xl font-bold">Acceso Denegado</h2>
-            <p class="text-gray-700">No tienes los permisos necesarios para acceder al historial de entregas.</p>
-            <p class="text-gray-700">Si crees que esto es un error, contacta al administrador del sistema.</p>
-            <a href="{{ route('dashboard') }}" class="btn btn-primary mt-4">Volver al Dashboard</a>
+    <div class="flex items-center justify-center bg-gray-100 w-full h-[500px] rounded-xl shadow-inner">
+        <div class="bg-white p-8 rounded-xl shadow-2xl text-center max-w-md w-full">
+            <h2 class="text-red-600 text-2xl font-bold mb-4">Acceso Denegado</h2>
+            <p class="text-gray-700 mb-2">No tienes los permisos necesarios para acceder al historial de entregas.</p>
+            <p class="text-gray-700 mb-6">Si crees que esto es un error, contacta al administrador del sistema.</p>
+            <a href="{{ route('dashboard') }}"
+               class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition">
+               Volver al Dashboard
+            </a>
         </div>
-    @endcan
+    </div>
+@endcan
 </div>
 @endsection
 

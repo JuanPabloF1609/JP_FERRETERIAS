@@ -8,14 +8,21 @@
     @vite(['resources/css/dashboard.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans flex">
+
+    <!-- Botón de hamburguesa fuera del sidebar -->
+    <button id="toggleSidebar" class="sidebar-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
     @include('components.sidebar_admin')
-    
-    <main class="main-content">
+
+    <main class="main-content" id="mainContent">
         @yield('content')
     </main>
 
     @yield('modals')
-    @include('components.scripts_produ')
 
+    {{-- Asegúrate de que este include esté dentro de @section('scripts') si modularizas --}}
+    @yield('scripts')
 </body>
 </html>

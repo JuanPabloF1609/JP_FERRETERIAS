@@ -2,7 +2,7 @@
 <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
 
 <script>
-    // Sidebar toggle
+    // Función para alternar el sidebar (manual o al hacer clic)
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         const content = document.getElementById('main-content');
@@ -10,59 +10,64 @@
         content.classList.toggle('ml-56');
     }
 
-    function abrirModal() {
-        document.getElementById('modalVenta').classList.remove('hidden');
+    // Función para abrir el sidebar si está cerrado
+    function abrirSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('main-content');
+
+        if (sidebar.classList.contains('-translate-x-full')) {
+            sidebar.classList.remove('-translate-x-full');
+            content.classList.add('ml-56');
+        }
     }
 
-    function cerrarModal() {
-        document.getElementById('modalVenta').classList.add('hidden');
-    }
-
-    function abrirModalEditar() {
-        document.getElementById('modalEditar').classList.remove('hidden');
-    }
-
-    function cerrarModalEditar() {
-        document.getElementById('modalEditar').classList.add('hidden');
-    }
-
+   
     function iniciarTutorial() {
-        introJs().setOptions({
+        const tutorial = introJs();
+
+        tutorial.setOptions({
             steps: [
-                {
-                    element: document.querySelector('[data-intro="crear-venta"]'),
-                    intro: "Aquí puedes crear una nueva venta."
-                },
-                {
-                    element: document.querySelector('[data-intro="buscar"]'),
-                    intro: "Este botón te permite buscar ventas por nombre o ID."
-                },
-                {
-                    element: document.querySelector('[data-intro="editar"]'),
-                    intro: "Usa este botón para editar una venta existente."
-                },
+                
                 {
                     element: document.querySelector('[data-intro="deshabilitar"]'),
-                    intro: "Este botón deshabilita una venta."
+                    intro: "En esta vista puedes consultar los productos disponibles y realizar compras fácilmente."
                 },
                 {
                     element: document.querySelector('[data-intro="ventas"]'),
-                    intro: "Este botón abre el módulo de ventas."
+                    intro: "Accede a todo el historial de ventas. Consulta, analiza o revisa cada detalle desde aquí."
                 },
                 {
                     element: document.querySelector('[data-intro="catalogo"]'),
-                    intro: "Accede al catálogo desde aquí."
+                    intro: "Aquí puedes explorar y administrar el catálogo de productos disponibles para la venta."
                 },
                 {
                     element: document.querySelector('[data-intro="cerrar-sesion"]'),
-                    intro: "Cierra tu sesión desde este botón."
+                    intro: "Finaliza tu sesión de forma segura. ¡Hasta pronto!"
                 }
             ],
             nextLabel: 'Siguiente',
             prevLabel: 'Anterior',
             doneLabel: 'Finalizar'
-        }).start();
+        });
+
+        tutorial.onbeforechange(async function(element) {
+    const elementosEnSidebar = ['ventas', 'catalogo', 'cerrar-sesion'];
+    if (element && element.getAttribute('data-intro')) {
+        const actual = element.getAttribute('data-intro');
+        if (elementosEnSidebar.includes(actual)) {
+            abrirSidebar();
+
+            // Esperar 300ms para que el sidebar se termine de mostrar
+            await new Promise(resolve => setTimeout(resolve, 300));
+
+            // Reforzar que intro.js recalibre la posición del tooltip
+            tutorial.refresh();
+        }
+    }
+});
+
+tutorial.start();
     }
 
-    // Ya no se ejecuta automáticamente
+    // No se inicia automáticamente
 </script>

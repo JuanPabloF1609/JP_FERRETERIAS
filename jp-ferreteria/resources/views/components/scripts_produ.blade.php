@@ -1,31 +1,38 @@
- <!-- Scripts -->
- <script>
+<script>
     const modal = document.getElementById('formularioModal');
+
     function mostrarFormulario() {
         modal.classList.remove('hidden');
     }
+
     function ocultarFormulario() {
         modal.classList.add('hidden');
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchBtn = document.querySelector('.btn-buscar');
-        const searchInput = document.querySelector('input[type="text"]');
-        const productosContainer = document.getElementById('productos-container');
-        const sinResultados = document.getElementById('sin-resultados');
+    document.getElementById('toggleSidebar').addEventListener('click', function () {
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const toggleBtn = document.getElementById('toggleSidebar');
 
-        sinResultados.style.display = 'none';
+        sidebar.classList.toggle('closed');
+        mainContent.classList.toggle('expanded');
 
-        searchBtn.addEventListener('click', function () {
-            const term = searchInput.value.trim();
+        // Mover el botón según el estado del sidebar
+        if (sidebar.classList.contains('closed')) {
+            toggleBtn.style.left = '20px';
+        } else {
+            toggleBtn.style.left = '270px';
+        }
+    });
 
-            if (term === '') {
-                sinResultados.textContent = 'Ingrese un término de búsqueda para mostrar productos';
-                sinResultados.style.display = '';
-                productosContainer.innerHTML = '';
-                productosContainer.appendChild(sinResultados);
-                return;
-            }
-        });
+    window.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggleSidebar');
+
+        if (sidebar.classList.contains('closed')) {
+            toggleBtn.style.left = '20px';
+        } else {
+            toggleBtn.style.left = '270px';
+        }
     });
 </script>
