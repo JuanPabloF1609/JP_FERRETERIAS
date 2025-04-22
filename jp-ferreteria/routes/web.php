@@ -39,14 +39,20 @@ Route::get('/historical', function () {
 
 
 // Ruta para el dashboard del cajero
-Route::get('/cashier', [CashierController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('cashier');
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Ruta principal del cajero
+    Route::get('/cashier', [CashierController::class, 'index'])->name('cashier');
+    
+    // Nuevas rutas para el funcionamiento del carrito
+    Route::post('/cashier/save-draft', [CashierController::class, 'saveDraft'])->name('cashier.saveDraft');
+    Route::post('/cashier/checkout', [CashierController::class, 'checkout'])->name('cashier.checkout');
+    Route::get('/cashier/get-drafts', [CashierController::class, 'getDrafts'])->name('cashier.getDrafts');
+    Route::get('/cashier/load-draft/{id}', [CashierController::class, 'loadDraft'])->name('cashier.loadDraft');
+});
 
 Route::get('/cashiermanager', function () {
-      return view('cashiermanager');
+    return view('cashiermanager');
 })->middleware('auth')->name('cashiermanager');
-
 
 // Archivos adicionales de configuración
 require __DIR__.'/settings.php';
