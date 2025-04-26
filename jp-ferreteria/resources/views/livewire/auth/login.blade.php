@@ -73,7 +73,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
     }
 }; ?>
 
-<div class="flex flex-col gap-6 ">
+<div class="flex flex-col gap-6 text-gray-800">
     <x-auth-header :title="__('Iniciar Sesión')" :description="__('Ingrese su correo electrónico y contraseña a continuación para iniciar sesión')" />
 
     <!-- Session Status -->
@@ -89,7 +89,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
             autofocus
             autocomplete="email"
             placeholder="email@example.com"
-            class=" text-gray-700 focus:ring-2 focus:ring-orange-500"
+            class="text-gray-800 focus:ring-2 focus:ring-orange-500"
         />
 
         <!-- Password -->
@@ -101,7 +101,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
                 required
                 autocomplete="current-password"
                 :placeholder="__('Contraseña')"
-                class=" text-gray-700  focus:ring-2 focus:ring-orange-500"
+                class="text-gray-800 focus:ring-2 focus:ring-orange-500"
             />
 
             @if (Route::has('password.request'))
@@ -112,7 +112,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
         </div>
 
         <!-- Remember Me -->
-        <flux:checkbox wire:model="remember" :label="__('Recordarme')" class="text-gray-700" />
+        <flux:checkbox wire:model="remember" :label="__('Recordarme')" class="text-gray-800" />
 
         <div class="flex items-center justify-end">
             <flux:button variant="primary" type="submit" class="w-full bg-orange-500 text-white hover:bg-orange-600 focus:ring-2 focus:ring-orange-500">
@@ -122,7 +122,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
     </form>
 
     @if (Route::has('register'))
-        <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-gray-600">
+        <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-gray-800">
             {{ __('No tienes cuenta?') }}
             <flux:link :href="route('register')" wire:navigate class="text-blue-600 hover:underline">{{ __('Crear cuenta') }}</flux:link>
         </div>
