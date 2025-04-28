@@ -21,7 +21,7 @@ class Factura extends Model
 
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class, 'ID_CLIENTE', 'ID_CLIENTE');
+        return $this->belongsTo(Clientes::class, 'ID_CLIENTE', 'ID_CLIENTE');
     }
 
     public function usuario()
@@ -31,7 +31,7 @@ class Factura extends Model
 
     public function productos()
     {
-        return $this->belongsToMany(Producto::class, 'factura_prod', 'ID_FACTURA', 'ID_PRODUCTO')
+        return $this->belongsToMany(Productos::class, 'factura_prod', 'ID_FACTURA', 'ID_PRODUCTO')
                     ->withPivot('CANTIDAD', 'DESCUENTO');
     }
 }

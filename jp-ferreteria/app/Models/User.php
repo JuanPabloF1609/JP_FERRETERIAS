@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,8 +10,10 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
+
+    // Indicar que la clave primaria no es un "bigIncrements"
+    public $incrementing = true;
 
     /**
      * The attributes that are mass assignable.
@@ -20,9 +21,14 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'second_name',
+        'first_surname',
+        'second_surname',
+        'user_name',
         'email',
         'password',
+        'status',
     ];
 
     /**
@@ -48,24 +54,34 @@ class User extends Authenticatable
         ];
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
+
+    public function scopeInactive($query)
+    {
+        return $query->where('status', 'inactive');
+    }
+
     /**
      * Get the user's initials
      */
     public function initials(): string
     {
-        return Str::of($this->name)
+        return Str::of($this->first_name . ' ' . ($this->second_name ?? '') . ' ' . $this->first_surname . ' ' . ($this->second_surname ?? ''))
             ->explode(' ')
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
-    
+
     public function facturas()
     {
-        return $this->hasMany(Factura::class, 'ID_USER', 'id');
+        return $this->hasMany(Factura::class, 'ID_USER', 'ID_USER');
     }
 
     public function ordenes()
     {
-        return $this->hasMany(OrdenEntrega::class, 'ID_USER', 'id');
+        return $this->hasMany(OrdenEntrega::class, 'ID_USER', 'ID_USER');
     }
 }

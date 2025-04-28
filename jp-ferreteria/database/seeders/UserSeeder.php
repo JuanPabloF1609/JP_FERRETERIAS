@@ -14,15 +14,10 @@ class UserSeeder extends Seeder
         // Crear permisos
         $permissions = [
             'view_admin_dashboard', 'view_caja_dashboard', 'view_delivery_dashboard',
-
             'view_users', 'create_users', 'edit_users', 'disable_users',
-
             'view_products', 'create_products', 'edit_products', 'disable_products',
-
             'view_categories', 'create_categories', 'edit categories', 'disable_categories',
-
             'view_delivery_order', 'create_delivery_order', 'edit_delivery_order', 'disable_delivery_order',
-
             'view_bill', 'create_bill', 'edit_bill', 'disable_bill',
         ];
 
@@ -61,26 +56,41 @@ class UserSeeder extends Seeder
 
         // Crear usuarios y asignar roles
         $adminUser = User::query()->create([
-            'name' => 'Administrador',
+            'first_name' => 'Carlos',
+            'second_name' => 'Andrés',
+            'first_surname' => 'Gómez',
+            'second_surname' => 'Rodríguez',
+            'name' => 'Carlos Andrés Gómez Rodríguez',
             'email' => 'admin@admin.com',
             'password' => bcrypt('Password'),
-            'email_verified_at' => now(),
+            'email_verified_at' => true, // Equivalente a email_verified_at
+            'status' => 'active',
         ]);
         $adminUser->assignRole($roleAdmin);
 
         $cajaUser = User::query()->create([
-            'name' => 'Caja',
+            'first_name' => 'María',
+            'second_name' => null,
+            'first_surname' => 'López',
+            'second_surname' => 'Pérez',
+            'name' => 'María López Pérez',
             'email' => 'caja@caja.com',
             'password' => bcrypt('Password'),
-            'email_verified_at' => now(),
+            'email_verified_at' => true,
+            'status' => 'active',
         ]);
         $cajaUser->assignRole($roleCaja);
 
         $domiciliarioUser = User::query()->create([
-            'name' => 'Domiciliario',
+            'first_name' => 'Juan',
+            'second_name' => 'David',
+            'first_surname' => 'Martínez',
+            'second_surname' => null,
+            'name' => 'Juan David Martínez',
             'email' => 'domi@domi.com',
             'password' => bcrypt('Password'),
-            'email_verified_at' => now(),
+            'email_verified_at' => true,
+            'status' => 'active',
         ]);
         $domiciliarioUser->assignRole($roleDomiciliario);
     }
