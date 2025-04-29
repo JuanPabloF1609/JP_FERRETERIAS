@@ -25,7 +25,7 @@
         <h2>Editar Categoría</h2>
         <form id="editarForm" method="POST" action="">
             @csrf
-            @method('PUT')
+            @method('PATCH') <!-- Cambiado a PATCH -->
             <label for="editar-nombre-categoria">Nombre Categoría</label>
             <input id="editar-nombre-categoria" name="NOMBRE_CATEGORIA" type="text" required>
             

@@ -1,5 +1,4 @@
-<!-- Scripts -->
- <script>
+<script>
     document.addEventListener('DOMContentLoaded', function () {
         const formularioModal = document.getElementById('formularioModal');
         const editarModal = document.getElementById('editarModal');
@@ -21,22 +20,34 @@
             formularioModal.classList.add('hidden');
         }
 
-        // Delegar el evento click en los botones "Editar"
-        document.addEventListener('click', function (event) {
-            if (event.target.classList.contains('btn-editar')) {
-                const id = event.target.getAttribute('data-id');
-                const nombre = event.target.getAttribute('data-nombre');
-                const descripcion = event.target.getAttribute('data-descripcion');
+        // Función para abrir el modal de editar categoría
+        function abrirModalEditar(categoriaId) {
+            const editarForm = document.getElementById('editarForm');
+            const editarNombreCategoria = document.getElementById('editar-nombre-categoria');
+            const editarDescripcion = document.getElementById('editar-descripcion');
+            const editarModal = document.getElementById('editarModal');
 
-                // Configurar el formulario con los datos de la categoría
-                editarForm.action = `/categories/${id}`;
-                editarNombreCategoria.value = nombre;
-                editarDescripcion.value = descripcion;
+            // Realizar una solicitud AJAX para obtener los datos de la categoría
+            fetch(`/categories/${categoriaId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al obtener los datos de la categoría');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Llenar los campos del formulario con los datos de la categoría
+                    editarNombreCategoria.value = data.NOMBRE_CATEGORIA;
+                    editarDescripcion.value = data.DESCRIPCION;
 
-                // Mostrar el modal de edición
-                editarModal.classList.remove('hidden');
-            }
-        });
+                    // Actualizar la acción del formulario con la URL correcta
+                    editarForm.action = `/categories/${categoriaId}`;
+                })
+                .catch(error => console.error('Error al obtener los datos de la categoría:', error));
+
+            // Mostrar el modal de edición
+            editarModal.classList.remove('hidden');
+        }
 
         // Función para ocultar el modal de editar categoría
         function ocultarEditarModal() {
@@ -66,10 +77,13 @@
             })
             .then(data => {
                 if (data.success) {
-                    // Actualizar la fila correspondiente en la tabla
-                    const row = document.querySelector(`button[data-id="${data.id}"]`).closest('tr');
-                    row.querySelector('td:nth-child(2)').textContent = data.NOMBRE_CATEGORIA;
-                    row.querySelector('td:nth-child(3)').textContent = data.DESCRIPCION;
+                    // Verifica si el botón con el atributo data-id existe
+                    const button = document.querySelector(`button[data-id="${data.id}"]`);
+                    if (button) {
+                        const row = button.closest('tr');
+                        row.querySelector('td:nth-child(2)').textContent = data.NOMBRE_CATEGORIA;
+                        row.querySelector('td:nth-child(3)').textContent = data.DESCRIPCION;
+                    }
 
                     // Ocultar el modal
                     ocultarEditarModal();
@@ -131,5 +145,6 @@
         window.mostrarFormulario = mostrarFormulario;
         window.ocultarFormulario = ocultarFormulario;
         window.ocultarEditarModal = ocultarEditarModal;
+        window.abrirModalEditar = abrirModalEditar; // Añadido para que sea accesible globalmente
     });
 </script>

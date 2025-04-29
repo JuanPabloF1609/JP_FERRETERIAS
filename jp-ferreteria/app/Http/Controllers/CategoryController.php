@@ -44,13 +44,13 @@ class CategoryController extends Controller
             'NOMBRE_CATEGORIA' => 'required|string|max:100',
             'DESCRIPCION' => 'nullable|string',
         ]);
-
+    
         $categoria = Categoria::findOrFail($id);
         $categoria->update([
             'NOMBRE_CATEGORIA' => $request->NOMBRE_CATEGORIA,
             'DESCRIPCION' => $request->DESCRIPCION,
         ]);
-
+    
         if ($request->expectsJson()) {
             return response()->json([
                 'success' => true,
@@ -59,9 +59,16 @@ class CategoryController extends Controller
                 'descripcion' => $categoria->DESCRIPCION,
             ]);
         }
-
+    
         return redirect()->route('category.index')->with('success', 'Categoría actualizada exitosamente.');
     }
+
+    public function show($id)
+    {
+        $categoria = Categoria::findOrFail($id);
+        return response()->json($categoria);
+    }
+    
 
     public function disable($id)
     {

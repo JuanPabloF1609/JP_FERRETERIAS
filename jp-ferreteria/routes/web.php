@@ -47,6 +47,7 @@ Route::middleware(['auth', 'can:view_caja_dashboard'])->group(function () {
 Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
 Route::post('/categories', [CategoryController::class, 'store'])->name('category.store');
 Route::patch('/categories/{id}', [CategoryController::class, 'update'])->name('category.update');
+Route::get('/categories/{id}', [CategoryController::class, 'show']);
 Route::patch('/categories/{id}/disable', [CategoryController::class, 'disable'])->name('category.disable');
 
 require __DIR__.'/auth.php';
