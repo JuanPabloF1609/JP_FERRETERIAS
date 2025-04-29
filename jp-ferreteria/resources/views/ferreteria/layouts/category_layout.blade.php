@@ -6,6 +6,7 @@
     <title>@yield('title', 'Gestión')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/css/admin/dashboard.css', 'resources/js/app.js'])
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="body">
 
@@ -21,7 +22,7 @@
     @include('ferreteria.components.bottombar')
     @include('ferreteria.components.scripts_orders')
     @yield('modals')
-    @include('ferreteria.components.scripts_produ')
+    @include('ferreteria.components.scripts_category')
 
 </body>
 </html>

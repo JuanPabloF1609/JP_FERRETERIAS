@@ -46,6 +46,9 @@
         <li><a href="{{ route('catalogo.index') }}" class="sidebar-link">Catalogo</a></li>
         @endcan
 
+        <!-- Ruta para Categoría (visible para todos los usuarios) -->
+        <li><a href="{{ route('category.index') }}" class="sidebar-link">Categoría</a></li>
+
         <!-- Botón para cerrar sesión -->
         <li>
             <form method="POST" action="{{ route('logout') }}" class="w-full">
