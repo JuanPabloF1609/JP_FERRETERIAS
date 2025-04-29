@@ -29,12 +29,12 @@
 
                     <!-- Opciones para Caja -->
                     @can('view_bill')
-                        <flux:navlist.item icon="document-text" :href="route('bills.index')" :current="request()->routeIs('bills.*')" wire:navigate>{{ __('Ventas') }}</flux:navlist.item>
+                        <flux:navlist.item icon="document-text" :href="route('admin.bills.index')" :current="request()->routeIs('bills.*')" wire:navigate>{{ __('Ventas') }}</flux:navlist.item>
                     @endcan
 
                     <!-- Opciones para Caja y Domiciliario -->
                     @can('view_delivery_order')
-                        <flux:navlist.item icon="truck" :href="route('delivery-orders.index')" :current="request()->routeIs('delivery-orders.*')" wire:navigate>{{ __('Ordenes') }}</flux:navlist.item>
+                        <flux:navlist.item icon="truck" :href="route('admin.delivery-orders.index')" :current="request()->routeIs('delivery-orders.*')" wire:navigate>{{ __('Ordenes') }}</flux:navlist.item>
                     @endcan
                 </flux:navlist.group>
             </flux:navlist>

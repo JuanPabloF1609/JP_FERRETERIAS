@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('can:edit_users');
     Volt::route('products', 'admin.products.index')->name('admin.products.index')->middleware('can:view_products');
     Volt::route('categories', 'admin.categories.index')->name('admin.categories.index')->middleware('can:view_categories');
-    Volt::route('bills', 'bills.index')->name('admin.bills.index')->middleware('can:view_bill');
+    Volt::route('bills', 'admin.bills.index')->name('admin.bills.index')->middleware('can:view_bill');
     Volt::route('delivery-orders', 'admin.delivery-orders.index')->name('admin.delivery-orders.index')->middleware('can:view_delivery_order');
 });
 
