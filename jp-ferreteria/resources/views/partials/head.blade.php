@@ -8,3 +8,8 @@
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+<script>
+    // Forzar siempre el tema claro
+    document.documentElement.classList.remove('dark');
+</script>
+
