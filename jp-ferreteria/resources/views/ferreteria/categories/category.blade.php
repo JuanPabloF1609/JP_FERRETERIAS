@@ -36,8 +36,7 @@
                             <button 
                                 class="btn-editar" 
                                 data-id="{{ $categoria->ID_CATEGORIA }}" 
-                                data-nombre="{{ $categoria->NOMBRE_CATEGORIA }}" 
-                                data-descripcion="{{ $categoria->DESCRIPCION }}" 
+                                onclick="abrirModalEditar({{ $categoria->ID_CATEGORIA }})"
                                 style="background-color: blue; color: white; border: 1px solid blue; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
                                 Editar
                             </button>
