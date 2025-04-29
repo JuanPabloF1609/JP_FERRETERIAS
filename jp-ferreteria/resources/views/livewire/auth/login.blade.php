@@ -74,7 +74,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
 }; ?>
 
 <div class="flex flex-col gap-6 text-gray-800">
-    <x-auth-header :title="__('Iniciar Sesión')" :description="__('Ingrese su correo electrónico y contraseña a continuación para iniciar sesión')" />
+    <x-auth-header :title="__('Login')" :description="__('')" />
 
     <!-- Session Status -->
     <x-auth-session-status class="text-center text-green-600" :status="session('status')" />
@@ -105,21 +105,24 @@ new #[Layout('components.layouts.auth')] class extends Component {
             />
 
             @if (Route::has('password.request'))
-                <flux:link class="absolute end-0 top-0 text-sm text-blue-600 hover:underline" :href="route('password.request')" wire:navigate>
+                <flux:link class=" text-sm text-blue-600 mt-1 hover:underline" :href="route('password.request')" wire:navigate>
                     {{ __('Olvido su contraseña?') }}
                 </flux:link>
             @endif
+
+
         </div>
 
-        <!-- Remember Me -->
-        <flux:checkbox wire:model="remember" :label="__('Recordarme')" class="text-gray-800" />
+
 
         <div class="flex items-center justify-end">
-            <flux:button variant="primary" type="submit" class="w-full bg-orange-500 text-white hover:bg-orange-600 focus:ring-2 focus:ring-orange-500">
-                {{ __('Log in') }}
+            
+            <flux:button variant="primary" type="submit" class="w-full bg-orange-500 mt-5 text-white hover:bg-orange-600 focus:ring-2 focus:ring-orange-500">
+                {{ __('Iniciar Sesion') }}
             </flux:button>
         </div>
     </form>
+    
 
     @if (Route::has('register'))
         <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-gray-800">

@@ -193,6 +193,36 @@ h1 {
     background-color: #e05500;
 }
 
+.btn-deshabilitar {
+    background-color: #ff0000;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-deshabilitar:hover {
+    background-color: #cc0000;
+}
+
+.btn-habilitar {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-habilitar:hover {
+    background-color: #218838;
+}
+
 .table-section {
     overflow-x: auto;
 }
@@ -374,4 +404,23 @@ h1 {
     .btn-buscar {
         width: 100%;
     }
+}
+
+
+.btn-deshabilitar {
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid;
+}
+
+.btn-rojo {
+    background-color: red;
+    border-color: red;
+}
+
+.btn-verde {
+    background-color: green;
+    border-color: green;
 }
