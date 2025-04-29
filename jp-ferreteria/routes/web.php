@@ -11,6 +11,7 @@ Route::get('/', function () {
 })->name('home');
 
 
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -34,6 +35,12 @@ Route::middleware(['auth', 'can:view_admin_dashboard'])->group(function () {
     Route::view('/dash_admin', 'ferreteria.products.dash_admin')->name('admin.dash');
     Route::get('/productos', [ProductoController::class, 'index'])->name('admin.product');
     Route::get('/empleados', [EmpleadoController::class, 'index'])->name('admin.employee');
+    Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
+    Route::get('/productos/buscar', [ProductoController::class, 'buscar']);
+    Route::put('/productos/{producto}/disable', [ProductoController::class, 'disable'])->name('productos.disable');
+    Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
+    Route::put('/productos/{producto}', [ProductoController::class, 'update'])->name('productos.update');
+    Route::put('/productos/{producto}/enable', [ProductoController::class, 'enable'])->name('productos.enable');
 });
 
 //Rutas para las vistas de caja

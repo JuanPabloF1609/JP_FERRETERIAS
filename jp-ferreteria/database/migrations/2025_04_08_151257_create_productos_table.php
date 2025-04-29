@@ -13,7 +13,7 @@ class CreateProductosTable extends Migration
             $table->string('NOMBRE_PRODUCTO', 100);
             $table->decimal('PRECIO', 10, 2);
             $table->integer('CANTIDAD');
-            $table->integer('STOCK_MINIMO');
+            $table->integer('STOCK_MINIMO')->nullable();
             $table->unsignedBigInteger('ID_CATEGORIA')->nullable();
             $table->string('REFERENCIA', 50)->nullable();
             $table->text('DESCRIPCION')->nullable();

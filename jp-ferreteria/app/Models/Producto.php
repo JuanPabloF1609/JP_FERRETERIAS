@@ -20,6 +20,7 @@ class Producto extends Model
         'ID_CATEGORIA',
         'REFERENCIA',
         'DESCRIPCION',
+        'activo',
     ];
 
     public function categoria()
