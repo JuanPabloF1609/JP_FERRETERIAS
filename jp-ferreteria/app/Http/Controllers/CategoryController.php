@@ -8,17 +8,18 @@ use App\Models\Categoria;
 class CategoryController extends Controller
 {
     public function index()
-    {
-        // Obtener todas las categorías y estadísticas
-        $categorias = Categoria::all();
-        $estadisticas = [
-            'categorias_activas' => Categoria::count(),
-            'categorias_inactivas' => 0, // Ajustar si se implementa lógica para inactivas
-        ];
+{
+    // Obtener todas las categorías
+    $categorias = Categoria::all();
 
-        // Retorna la vista de categorías con datos
-        return view('ferreteria.categories.category', compact('categorias', 'estadisticas'));
-    }
+    $estadisticas = [
+        'categorias_activas' => Categoria::where('ESTADO', 'activo')->count(),
+        'categorias_inactivas' => Categoria::where('ESTADO', 'inactivo')->count(),
+    ];
+
+    return view('ferreteria.categories.category', compact('categorias', 'estadisticas'));
+}
+
 
     public function store(Request $request)
     {
@@ -64,10 +65,19 @@ class CategoryController extends Controller
     }
 
     public function disable($id)
-    {
-        $categoria = Categoria::findOrFail($id);
-        $categoria->delete(); // O cambiar estado si se maneja lógica de inactivas
+{
+    $categoria = Categoria::findOrFail($id);
 
-        return redirect()->route('category.index')->with('success', 'Categoría deshabilitada exitosamente.');
+    // Cambiar el estado
+    if ($categoria->ESTADO === 'activo') {
+        $categoria->ESTADO = 'inactivo';
+    } else {
+        $categoria->ESTADO = 'activo';
     }
+
+    $categoria->save();
+
+    return redirect()->route('category.index')->with('success', 'Estado de la categoría actualizado exitosamente.');
+}
+
 }

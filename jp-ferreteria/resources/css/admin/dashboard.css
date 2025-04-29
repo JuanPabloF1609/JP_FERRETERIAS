@@ -375,3 +375,22 @@ h1 {
         width: 100%;
     }
 }
+
+
+.btn-deshabilitar {
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid;
+}
+
+.btn-rojo {
+    background-color: red;
+    border-color: red;
+}
+
+.btn-verde {
+    background-color: green;
+    border-color: green;
+}

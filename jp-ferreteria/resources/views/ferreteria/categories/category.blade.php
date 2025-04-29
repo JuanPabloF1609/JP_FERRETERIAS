@@ -41,13 +41,14 @@
                                 style="background-color: blue; color: white; border: 1px solid blue; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
                                 Editar
                             </button>
+                            @php
+                                $colorClass = $categoria->ESTADO === 'activo' ? 'btn-rojo' : 'btn-verde';
+                            @endphp
                             <form method="POST" action="{{ route('category.disable', $categoria->ID_CATEGORIA) }}" style="display:inline;">
                                 @csrf
                                 @method('PATCH')
-                                <button type="submit" 
-                                        class="btn-deshabilitar" 
-                                        style="background-color: red; color: white; border: 1px solid red; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
-                                    Deshabilitar
+                                <button type="submit" class="btn-deshabilitar {{ $colorClass }}">
+                                    {{ $categoria->ESTADO === 'activo' ? 'Deshabilitar' : 'Habilitar' }}
                                 </button>
                             </form>
                         </td>
