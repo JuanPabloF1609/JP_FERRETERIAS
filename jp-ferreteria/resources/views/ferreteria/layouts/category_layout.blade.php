@@ -21,7 +21,7 @@
     @include('ferreteria.components.bottombar')
     @include('ferreteria.components.scripts_orders')
     @yield('modals')
-    @include('ferreteria.components.scripts_produ')
+    @include('ferreteria.components.scripts_category')
 
 </body>
 </html>

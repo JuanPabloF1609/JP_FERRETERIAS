@@ -3,6 +3,7 @@
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CatalogoController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -41,5 +42,11 @@ Route::middleware(['auth', 'can:view_caja_dashboard'])->group(function () {
     Route::view('/pedidos', 'ferreteria.bills.pedidos')->name('caja.pedidos');
     Route::get('/catalogo', [CatalogoController::class, 'index'])->name('catalogo.index');
 });
+
+// Ruta para la vista de categorías
+Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
+Route::post('/categories', [CategoryController::class, 'store'])->name('category.store');
+Route::patch('/categories/{id}', [CategoryController::class, 'update'])->name('category.update');
+Route::patch('/categories/{id}/disable', [CategoryController::class, 'disable'])->name('category.disable');
 
 require __DIR__.'/auth.php';
