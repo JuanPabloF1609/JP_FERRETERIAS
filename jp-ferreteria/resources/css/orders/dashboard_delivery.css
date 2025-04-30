@@ -1,0 +1,80 @@
+body {
+    @apply bg-gray-100;
+}
+
+.main-content {
+    @apply pt-20 pb-20 flex justify-center;
+}
+
+.dashboard-container {
+    @apply bg-white w-[900px] h-[540px] rounded-[10px] p-6 shadow-md overflow-auto;
+}
+
+.dashboard-title {
+    @apply text-center text-xl font-bold mb-6;
+}
+
+.dashboard-orders {
+    @apply flex flex-col lg:flex-row lg:justify-center gap-8 items-center;
+}
+
+
+.top-bar {
+    @apply w-full h-12 bg-zinc-300 fixed top-0 left-0 z-40 transition-opacity duration-300;
+}
+
+.toggleSidebar {
+    @apply fixed top-1 left-4 z-50 p-2 bg-gray-300 hover:bg-gray-400 rounded;
+}
+
+#sidebar {
+    @apply fixed top-0 left-0 w-64 h-full bg-gray-300 p-4 duration-300 z-40;
+}
+
+#closeSidebar {
+    @apply mb-4 text-right w-full;
+}
+
+.sidebar-link {
+    @apply block px-4 py-2 bg-blue-400 text-white text-center rounded hover:bg-blue-500;
+}
+
+.sidebar-link-logout {
+    @apply mt-auto;
+}
+
+.orden-cola-container {
+    @apply w-[260px] h-[350px] bg-white rounded-lg shadow-[0px_4px_8px_0px_rgba(0,0,0,0.10)] border border-neutral-200 p-4;
+}
+
+.orden-cola-title {
+    @apply font-bold text-center mb-4;
+}
+
+.orden-cola-content {
+    @apply bg-zinc-300 p-4 border rounded border-black;
+}
+
+.orden-activa-container {
+    @apply w-[260px] h-[350px] bg-white rounded-lg shadow-[0px_4px_8px_0px_rgba(0,0,0,0.10)] border border-neutral-200 p-4;
+}
+
+.orden-activa-title {
+    @apply font-bold text-center mb-4;
+}
+
+.orden-activa-content {
+    @apply bg-zinc-300 p-4 border rounded border-black;
+}
+
+.btn-entregar {
+    @apply w-full py-1 text-black bg-[#21FF04] hover:brightness-50 rounded;
+}
+
+.btn-ayuda {
+    @apply ml-2 text-white bg-blue-500 hover:bg-blue-600 rounded-full px-2;
+}
+
+.bottombar {
+    @apply w-full h-12 bg-zinc-300 fixed bottom-0 left-0 z-40 transition-opacity duration-300;
+}
