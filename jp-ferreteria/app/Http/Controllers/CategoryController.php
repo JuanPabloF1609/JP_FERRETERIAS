@@ -56,8 +56,8 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'id' => $categoria->ID_CATEGORIA,
-                'nombre' => $categoria->NOMBRE_CATEGORIA,
-                'descripcion' => $categoria->DESCRIPCION,
+                'NOMBRE_CATEGORIA' => $categoria->NOMBRE_CATEGORIA,
+                'DESCRIPCION' => $categoria->DESCRIPCION,
             ]);
         }
     
