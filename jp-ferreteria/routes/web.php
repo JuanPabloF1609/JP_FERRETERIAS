@@ -4,6 +4,7 @@ use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -29,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'can:view_delivery_dashboard'])->group(function () {
     Route::view('/orders', 'ferreteria.orders.orders')->name('delivery.index');
     Route::view('/historical', 'ferreteria.orders.historical')->name('historical.index');
+    Route::get('/orders', [OrderController::class, 'index'])->name('delivery.index');
 });
 
 //Rutas para las vistas de administrador

@@ -30,17 +30,21 @@
     }
 
     // Confirmación de entrega
-    if (btnEntregar) {
-        btnEntregar.addEventListener('click', () => {
-            const confirmado = confirm('¿Estás seguro de que deseas marcar esta orden como entregada?');
-            if (confirmado) {
-                console.log('Orden marcada como entregada');
-                // Aquí puedes colocar la lógica adicional para actualizar la orden
-            } else {
-                console.log('Entrega cancelada');
+    document.getElementById('btn-entregar')?.addEventListener('click', async function() {
+        const ordenId = this.getAttribute('data-orden-id');
+        if (confirm('¿Marcar como entregada?')) {
+            const response = await fetch(`/orders/${ordenId}/entregar`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                location.reload(); // Recargar para reflejar cambios
             }
-        });
-    }
+        }
+    });
 
     if (btnAyuda) {
         btnAyuda.addEventListener('click', () => {
