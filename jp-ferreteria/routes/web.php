@@ -7,6 +7,12 @@ use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\RolController;
+
+// Ruta para la vista de roles
+Route::get('/roles', [RolController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('rol');
 
 // Redirigir la ruta raíz al login
 Route::get('/', function () {
