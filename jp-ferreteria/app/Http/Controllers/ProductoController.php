@@ -26,7 +26,6 @@ class ProductoController extends Controller
         $estadisticas = [
             'inventario' => $productos->count(),
             'bajo_stock' => $productos->where('CANTIDAD', '<', 10)->count(),
-            'inactivos' => Producto::where('activo', false)->count(), // Puedes ajustar esta lógica según tu modelo
         ];
 
         return view('ferreteria.products.producto', compact('productos', 'estadisticas', 'categorias'));
