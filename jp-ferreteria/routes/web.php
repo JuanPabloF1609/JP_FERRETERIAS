@@ -46,8 +46,14 @@ Route::middleware(['auth', 'can:view_admin_dashboard'])->group(function () {
 
 //Rutas para las vistas de caja
 Route::middleware(['auth', 'can:view_caja_dashboard'])->group(function () {
-    Route::view('/pedidos', 'ferreteria.bills.pedidos')->name('caja.pedidos');
+    Route::get('/pedidos', [CatalogoController::class, 'pedidos'])->name('caja.pedidos');
     Route::get('/catalogo', [CatalogoController::class, 'index'])->name('catalogo.index');
+    // Ruta para finalizar la compra
+    Route::post('/finalizar-compra', [CatalogoController::class, 'finalizarCompra'])->name('catalogo.finalizarCompra');
+    // Ruta para crear una venta desde el modal
+    Route::post('/ventas/crear', [CatalogoController::class, 'crearVenta'])->name('ventas.crear');
+    // Ruta para editar una venta
+    Route::put('/ventas/editar', [CatalogoController::class, 'editarVenta'])->name('ventas.editar');
 });
 
 // Ruta para la vista de categorías
@@ -56,5 +62,8 @@ Route::post('/categories', [CategoryController::class, 'store'])->name('category
 Route::patch('/categories/{id}', [CategoryController::class, 'update'])->name('category.update');
 Route::get('/categories/{id}', [CategoryController::class, 'show']);
 Route::patch('/categories/{id}/disable', [CategoryController::class, 'disable'])->name('category.disable');
+
+
+Route::get('/ventas/{id}/toggle', [CatalogoController::class, 'toggleEstadoVenta'])->name('ventas.toggle')->middleware('can:disable_bill');
 
 require __DIR__.'/auth.php';

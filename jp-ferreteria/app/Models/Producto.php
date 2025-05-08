@@ -20,7 +20,6 @@ class Producto extends Model
         'ID_CATEGORIA',
         'REFERENCIA',
         'DESCRIPCION',
-        'activo',
     ];
 
     public function categoria()
@@ -32,9 +31,12 @@ class Producto extends Model
     {
         return $this->hasMany(Alerta::class, 'ID_PRODUCTO', 'ID_PRODUCTO');
     }
+
+    /**
+     * Relación con las fotos del producto.
+     */
     public function fotos()
-{
-    return $this->hasMany(FotoProducto::class, 'ID_PRODUCTO', 'ID_PRODUCTO');
-}
-    
+    {
+        return $this->hasMany(FotoProducto::class, 'ID_PRODUCTO', 'ID_PRODUCTO');
+    }
 }
