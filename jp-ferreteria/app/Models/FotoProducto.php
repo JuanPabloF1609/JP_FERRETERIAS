@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class FotoProducto extends Model
 {
@@ -17,8 +18,19 @@ class FotoProducto extends Model
         'URL_FOTO',
     ];
 
+    /**
+     * Relación inversa con el producto.
+     */
     public function producto()
     {
         return $this->belongsTo(Producto::class, 'ID_PRODUCTO', 'ID_PRODUCTO');
+    }
+
+    /**
+     * Accesor para obtener la URL pública de la foto.
+     */
+    public function getUrlFotoAttribute($value)
+    {
+        return Storage::url($this->attributes['URL_FOTO']);
     }
 }
