@@ -51,7 +51,7 @@
             <!-- Fotos principales del producto -->
             <div class="w-1/3">
                 <div id="modal-product-images" class="grid grid-cols-1 gap-4">
-                    <!-- Foto principal dinámica -->
+                    <!-- Imagen principal dinámica -->
                 </div>
             </div>
             <!-- Información del producto -->

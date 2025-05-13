@@ -228,18 +228,19 @@
 
         // Actualizar contenido del modal
         modalName.textContent = product.NOMBRE_PRODUCTO;
-        modalName.dataset.productId = product.ID_PRODUCTO; // Asignar el ID_PRODUCTO al atributo data-productId
+        modalName.dataset.productId = product.ID_PRODUCTO;
         modalDescription.textContent = product.DESCRIPCION || 'Sin descripción disponible.';
         modalPrice.textContent = `Precio: $${product.PRECIO}`;
         modalStock.textContent = `Cantidad disponible: ${product.CANTIDAD}`;
         modalReference.textContent = `Referencia: ${product.REFERENCIA || 'N/A'}`;
 
-        // Cargar todas las fotos principales
-        modalImages.innerHTML = product.fotos.map(foto => `
-            <img src="${foto.url_foto}" 
-                 alt="Foto del producto" 
-                 class="w-full h-64 object-cover rounded mb-4">
-        `).join('');
+        // Mostrar solo la primera imagen como principal
+        const mainImage = product.fotos.length > 0 ? product.fotos[0].url_foto : 'https://via.placeholder.com/300';
+        modalImages.innerHTML = `
+            <img src="${mainImage}" 
+                 alt="Foto principal del producto" 
+                 class="w-full h-64 object-cover rounded">
+        `;
 
         // Cargar miniaturas
         modalThumbnails.innerHTML = product.fotos.map(foto => `
@@ -249,10 +250,7 @@
                  onclick="updateMainImage('${foto.url_foto}')">
         `).join('');
 
-        // Asignar el ID_PRODUCTO al botón "Añadir al carrito"
         addToCartButton.dataset.productId = product.ID_PRODUCTO;
-
-        // Mostrar el modal
         modal.classList.remove('hidden');
     }
 

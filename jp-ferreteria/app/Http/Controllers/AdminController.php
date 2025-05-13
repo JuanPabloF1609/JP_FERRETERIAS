@@ -22,4 +22,10 @@ class AdminController extends Controller
 
         return view('ferreteria.products.dash_admin', compact('estadisticas'));
     }
+
+    public function alertas()
+    {
+        $alertas = \App\Models\Alerta::with('producto')->where('ESTADO_ALERTA', 'Pendiente')->orderBy('FECHA_ALERTA', 'desc')->get();
+        return view('admin.alertas', compact('alertas'));
+    }
 }

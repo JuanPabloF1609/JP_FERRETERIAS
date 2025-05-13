@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Producto;
 use App\Models\Cliente;
 use App\Models\Factura;
+use App\Models\OrdenEntrega;
+use App\Models\User;
+use App\Models\EstadoOrden;
+use Illuminate\Support\Facades\Auth;
+use Twilio\Rest\Client;
 
 class CatalogoController extends Controller
 {
@@ -68,17 +73,111 @@ class CatalogoController extends Controller
                 $producto->CANTIDAD -= $item['quantity'];
                 $producto->save();
 
+                // Calcular umbral del 20% para alerta temprana
+                $umbralTemprano = ceil($producto->STOCK_MINIMO + (($producto->STOCK_MINIMO * 20) / 100));
+
+                // ALERTA TEMPRANA (20% por encima del mínimo)
+                if ($producto->CANTIDAD <= $umbralTemprano && $producto->CANTIDAD > $producto->STOCK_MINIMO) {
+                    $alertaTemprana = \App\Models\Alerta::where('ID_PRODUCTO', $producto->ID_PRODUCTO)
+                        ->where('ESTADO_ALERTA', 'Pendiente')
+                        ->where('COMENTARIO', 'like', '%temprana%')
+                        ->first();
+
+                    if (!$alertaTemprana) {
+                        \App\Models\Alerta::create([
+                            'ID_PRODUCTO' => $producto->ID_PRODUCTO,
+                            'COMENTARIO' => 'Alerta temprana: el producto está cerca del stock mínimo.',
+                            'ESTADO_ALERTA' => 'Pendiente',
+                            'FECHA_ALERTA' => now(),
+                        ]);
+                        // Enviar SMS
+                        try {
+                            $twilio = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
+                            $twilio->messages->create(
+                                env('ALERTA_SMS_TO'),
+                                [
+                                    "from" => env('TWILIO_FROM'),
+                                    "body" => "ALERTA TEMPRANA: El producto {$producto->NOMBRE_PRODUCTO} está cerca del stock mínimo."
+                                ]
+                            );
+                        } catch (\Exception $e) {
+                            // Puedes registrar el error si lo deseas
+                        }
+                    }
+                }
+
+                // ALERTA DE STOCK MÍNIMO
+                if ($producto->CANTIDAD <= $producto->STOCK_MINIMO) {
+                    $alertaExistente = \App\Models\Alerta::where('ID_PRODUCTO', $producto->ID_PRODUCTO)
+                        ->where('ESTADO_ALERTA', 'Pendiente')
+                        ->where('COMENTARIO', 'not like', '%temprana%')
+                        ->first();
+
+                    if (!$alertaExistente) {
+                        \App\Models\Alerta::create([
+                            'ID_PRODUCTO' => $producto->ID_PRODUCTO,
+                            'COMENTARIO' => 'El producto ha alcanzado el stock mínimo.',
+                            'ESTADO_ALERTA' => 'Pendiente',
+                            'FECHA_ALERTA' => now(),
+                        ]);
+                        \Log::info('Intentando enviar SMS de alerta para producto: ' . $producto->NOMBRE_PRODUCTO);
+                        try {
+                            $twilio = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
+                            $twilio->messages->create(
+                                env('ALERTA_SMS_TO'),
+                                [
+                                    "from" => env('TWILIO_FROM'),
+                                    "body" => "ALERTA: El producto {$producto->NOMBRE_PRODUCTO} ha alcanzado el stock mínimo."
+                                ]
+                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Error al enviar SMS: ' . $e->getMessage());
+                        }
+                    }
+                }
+
                 // Registrar en la tabla pivote
                 $factura->productos()->attach($item['ID_PRODUCTO'], [
                     'CANTIDAD' => $item['quantity'],
-                    'DESCUENTO' => 0, // Ajustar si se requiere un descuento
+                    'DESCUENTO' => 0,
                 ]);
             }
 
-            return response()->json(['success' => true, 'message' => 'Compra finalizada y guardada correctamente.']);
+            // 1. Obtener todos los domiciliarios
+            $domiciliarios = User::role('domiciliario')->get();
+
+            if ($domiciliarios->isEmpty()) {
+                return response()->json(['success' => false, 'message' => 'No hay domiciliarios disponibles.'], 400);
+            }
+
+            // 2. Algoritmo round robin: buscar el domiciliario con menos órdenes activas
+            $domiciliarioAsignado = $domiciliarios->sortBy(function ($user) {
+                return OrdenEntrega::where('ID_USER', $user->id)
+                    ->whereHas('estado', function($q) {
+                        $q->where('NOMBRE_ESTADO_ORDEN', 'No_Entregado'); // <-- Esto es correcto
+                    })->count();
+            })->first();
+
+            // 3. Estado inicial de la orden (debe ser 'No_Entregado')
+            $estadoOrden = EstadoOrden::where('NOMBRE_ESTADO_ORDEN', 'No_Entregado')->first();
+
+            // 4. Crear la orden de entrega
+            OrdenEntrega::create([
+                'ID_USER' => $domiciliarioAsignado->id,
+                'ID_FACTURA' => $factura->ID_FACTURA,
+                'ID_ESTADO_ORDEN' => $estadoOrden ? $estadoOrden->ID_ESTADO_ORDEN : null,
+                'FECHA_ORDEN' => now(),
+                'DIRECCION_ENTREGA' => $validated['address'] ?? $cliente->DIRECCION_CLIENTE,
+            ]);
+
+            return response()->json(['success' => true, 'message' => 'Compra finalizada y orden de entrega creada correctamente.']);
         } catch (\Exception $e) {
-            // Manejar errores y devolver una respuesta adecuada
-            return response()->json(['success' => false, 'message' => 'Error al procesar la compra.', 'error' => $e->getMessage()], 500);
+            \Log::error('Error en finalizarCompra: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al procesar la compra.',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 
@@ -181,18 +280,40 @@ class CatalogoController extends Controller
         return redirect()->back()->with('success', 'Venta actualizada correctamente.');
     }
 
-
-
-
-    
-
     public function toggleEstadoVenta($id)
-{
-    $factura = Factura::findOrFail($id);
-    $factura->ESTADO = ($factura->ESTADO === 'Activo') ? 'Inactivo' : 'Activo';
-    $factura->save();
+    {
+        $factura = Factura::findOrFail($id);
+        $factura->ESTADO = ($factura->ESTADO === 'Activo') ? 'Inactivo' : 'Activo';
+        $factura->save();
 
-    return redirect()->back()->with('success', 'Estado de la venta actualizado correctamente.');
-}
+        return redirect()->back()->with('success', 'Estado de la venta actualizado correctamente.');
+    }
+
+    public function misOrdenes()
+    {
+        $user = Auth::user();
+
+        // Orden activa (la primera con estado 'Activo')
+        $ordenActiva = OrdenEntrega::with(['factura.cliente', 'factura.productos'])
+            ->where('ID_USER', $user->id)
+            ->whereHas('estado', function($q) {
+                $q->where('NOMBRE_ESTADO_ORDEN', 'Activo');
+            })
+            ->orderBy('FECHA_ORDEN')
+            ->first();
+
+        // Órdenes en cola (las siguientes con estado 'Activo')
+        $ordenesCola = OrdenEntrega::with(['factura.cliente', 'factura.productos'])
+            ->where('ID_USER', $user->id)
+            ->whereHas('estado', function($q) {
+                $q->where('NOMBRE_ESTADO_ORDEN', 'Activo');
+            })
+            ->orderBy('FECHA_ORDEN')
+            ->skip(1)
+            ->take(5)
+            ->get();
+
+        return view('ferreteria.orders.orders', compact('ordenActiva', 'ordenesCola'));
+    }
 
 }

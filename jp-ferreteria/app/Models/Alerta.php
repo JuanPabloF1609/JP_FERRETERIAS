@@ -19,7 +19,6 @@ class Alerta extends Model
         'FECHA_ALERTA',
     ];
 
-
     public function producto()
     {
         return $this->belongsTo(Producto::class, 'ID_PRODUCTO', 'ID_PRODUCTO');

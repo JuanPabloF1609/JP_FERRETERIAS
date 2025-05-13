@@ -7,8 +7,8 @@
         <div class="dashboard-container">
             <h1 class="dashboard-title">ORDENES</h1>
             <div class="dashboard-orders relative">
-                @include('ferreteria.components.orden_activa')
-                @include('ferreteria.components.orden_cola')
+                @include('ferreteria.components.orden_activa', ['orden' => $ordenActiva])
+                @include('ferreteria.components.orden_cola', ['ordenes' => $ordenesCola])
             </div>
             <!-- Botón de ayuda -->
             <button id="btn-ayuda" class="btn-ayuda">?</button>
