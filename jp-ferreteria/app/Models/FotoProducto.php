@@ -18,6 +18,8 @@ class FotoProducto extends Model
         'URL_FOTO',
     ];
 
+    protected $appends = ['url_foto'];
+
     /**
      * Relación inversa con el producto.
      */

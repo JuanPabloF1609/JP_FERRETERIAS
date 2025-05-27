@@ -1,4 +1,4 @@
- <!-- Scripts -->
+<!-- Scripts -->
  <script>
     const modal = document.getElementById('formularioModal');
     function mostrarFormulario() {
@@ -9,41 +9,45 @@
     }
 
     function toggleProductStatus(productId, button) {
-        if (confirm('¿Estás seguro de cambiar el estado de este producto?')) {
-            fetch(`/admin/productos/${productId}/toggle-status`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+        let estadoActual = button.getAttribute('data-estado');
+        let url = estadoActual === 'activo'
+            ? `/productos/${productId}/disable`
+            : `/productos/${productId}/enable`;
+
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Cambia el estado visualmente
+                if (estadoActual === 'activo') {
+                    button.textContent = 'Habilitar';
+                    button.classList.remove('bg-red-500', 'hover:bg-red-600');
+                    button.classList.add('bg-green-500', 'hover:bg-green-600');
+                    button.setAttribute('data-estado', 'inactivo');
+                    button.closest('tr').querySelector('span').textContent = 'Inactivo';
+                    button.closest('tr').querySelector('span').className = 'text-red-600 font-bold';
+                } else {
+                    button.textContent = 'Deshabilitar';
+                    button.classList.remove('bg-green-500', 'hover:bg-green-600');
+                    button.classList.add('bg-red-500', 'hover:bg-red-600');
+                    button.setAttribute('data-estado', 'activo');
+                    button.closest('tr').querySelector('span').textContent = 'Activo';
+                    button.closest('tr').querySelector('span').className = 'text-green-600 font-bold';
                 }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Cambiar el texto y color del botón
-                    if (data.new_status) {
-                        button.textContent = 'Desactivar';
-                        button.classList.remove('bg-green-500', 'hover:bg-green-600');
-                        button.classList.add('bg-red-500', 'hover:bg-red-600');
-                    } else {
-                        button.textContent = 'Activar';
-                        button.classList.remove('bg-red-500', 'hover:bg-red-600');
-                        button.classList.add('bg-green-500', 'hover:bg-green-600');
-                    }
-                    
-                    // Opcional: Mostrar notificación
-                    alert(data.message);
-                    
-                    // Opcional: Recargar la fila o tabla si es necesario
-                    // location.reload();
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al cambiar el estado del producto');
-            });
-        }
+            } else {
+                alert('No se pudo cambiar el estado.');
+            }
+        })
+        .catch(error => {
+            alert('Error al cambiar el estado del producto');
+            console.error(error);
+        });
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -114,6 +118,20 @@
                 document.getElementById('edit_STOCK_MINIMO').value = data.STOCK_MINIMO;
                 document.getElementById('edit_REFERENCIA').value = data.REFERENCIA;
                 document.getElementById('edit_DESCRIPCION').value = data.DESCRIPCION;
+                document.getElementById('edit_MARCA').value = data.MARCA || '';
+                document.getElementById('edit_COLOR').value = data.COLOR || '';
+                document.getElementById('edit_UNIDAD_MEDIDA').value = data.UNIDAD_MEDIDA || '';
+                document.getElementById('edit_MATERIAL').value = data.MATERIAL || '';
+                document.getElementById('edit_DIMENSIONES').value = data.DIMENSIONES || '';
+                document.getElementById('edit_USO').value = data.USO || '';
+                document.getElementById('edit_NORMA').value = data.NORMA || '';
+                document.getElementById('edit_PROCEDENCIA').value = data.PROCEDENCIA || '';
+                document.getElementById('edit_OFERTA').checked = !!data.OFERTA;
+                document.getElementById('edit_PRECIO_OFERTA').value = data.PRECIO_OFERTA || '';
+                document.getElementById('edit_CUOTAS').value = data.CUOTAS || '';
+                document.getElementById('edit_CUOTA_VALOR').value = data.CUOTA_VALOR || '';
+                document.getElementById('edit_MAS_VENDIDO').checked = !!data.MAS_VENDIDO;
+                document.getElementById('edit_CARACTERISTICAS').value = data.CARACTERISTICAS || '';
 
                 // Seleccionar la categoría correcta en el <select>
                 const categoriaSelect = document.getElementById('edit_ID_CATEGORIA');
@@ -131,4 +149,43 @@
         const modal = document.getElementById('modalEditarProducto');
         modal.classList.add('hidden');
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.btn-toggle-estado').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const estadoActual = this.getAttribute('data-estado');
+                const url = estadoActual === 'habilitado'
+                    ? `/productos/${id}/disable`
+                    : `/productos/${id}/enable`;
+
+                fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        // Cambia el texto y color del botón
+                        if (estadoActual === 'habilitado') {
+                            this.textContent = 'Habilitar';
+                            this.classList.remove('bg-red-500', 'hover:bg-red-600');
+                            this.classList.add('bg-green-500', 'hover:bg-green-600');
+                            this.setAttribute('data-estado', 'deshabilitado');
+                        } else {
+                            this.textContent = 'Deshabilitar';
+                            this.classList.remove('bg-green-500', 'hover:bg-green-600');
+                            this.classList.add('bg-red-500', 'hover:bg-red-600');
+                            this.setAttribute('data-estado', 'habilitado');
+                        }
+                    } else {
+                        alert('No se pudo cambiar el estado.');
+                    }
+                });
+            });
+        });
+    });
 </script>

@@ -24,6 +24,7 @@
                     <th>DESCRIPCION</th>
                     <th>CANTIDAD</th>
                     <th>PRECIO</th>
+                    <th>ESTADO</th> <!-- NUEVA COLUMNA -->
                     <th>
                     @can('create_products')
                         <button data-intro="crear-producto" onclick="mostrarFormulario()" class="btn-crear">Crear producto</button>
@@ -41,33 +42,29 @@
                         <td>{{ $producto->CANTIDAD }}</td>
                         <td>{{ $producto->PRECIO }}</td>
                         <td>
+                            <span class="{{ $producto->ESTADO === 'inactivo' ? 'text-red-600 font-bold' : 'text-green-600 font-bold' }}">
+                                {{ ucfirst($producto->ESTADO) }}
+                            </span>
+                        </td>
+                        <td>
                             <!-- Botón Editar -->
                             <button onclick="abrirModalEditar({{ $producto->ID_PRODUCTO }})" class="btn-editar bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
                                 Editar
                             </button>
 
-                            <!-- Botón Deshabilitar -->
-                            <form method="POST" action="{{ route('productos.disable', $producto->ID_PRODUCTO) }}" style="display:inline;">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="btn-deshabilitar bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-                                    Deshabilitar
-                                </button>
-                            </form>
-
-                            <!-- Botón Habilitar -->
-                            <form method="POST" action="{{ route('productos.enable', $producto->ID_PRODUCTO) }}" style="display:inline;">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit" class="btn-habilitar bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                                    Habilitar
-                                </button>
-                            </form>
+                            <!-- Botón de estado -->
+                            <button 
+                                class="btn-toggle-estado {{ $producto->ESTADO === 'activo' ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' }} text-white px-4 py-2 rounded"
+                                data-id="{{ $producto->ID_PRODUCTO }}"
+                                data-estado="{{ $producto->ESTADO }}"
+                                onclick="toggleProductStatus({{ $producto->ID_PRODUCTO }}, this)">
+                                {{ $producto->ESTADO === 'activo' ? 'Deshabilitar' : 'Habilitar' }}
+                            </button>
                         </td>
                     </tr>
                 @empty
                     <tr id="sin-resultados">
-                        <td colspan="7" class="py-4 text-gray-500">
+                        <td colspan="8" class="py-4 text-gray-500">
                             No hay productos disponibles.
                         </td>
                     </tr>

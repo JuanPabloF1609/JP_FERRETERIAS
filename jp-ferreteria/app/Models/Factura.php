@@ -17,6 +17,7 @@ class Factura extends Model
         'ID_USER',
         'FECHA_FACTURA',
         'TOTAL',
+        'ESTADO', // <-- Agrega esto
     ];
 
     public function cliente()

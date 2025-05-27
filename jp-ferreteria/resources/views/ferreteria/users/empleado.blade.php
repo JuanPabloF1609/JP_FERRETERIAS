@@ -26,7 +26,38 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Aquí irían los empleados dinámicos -->
+                @forelse ($empleados as $empleado)
+                    <tr>
+                        <td>{{ $empleado->name }}</td>
+                        <td>{{ $empleado->id }}</td>
+                        <td>{{ $empleado->roles->pluck('name')->join(', ') }}</td>
+                        <td>{{ $empleado->estado ?? 'activo' }}</td>
+                        <td>
+                            <button 
+                                class="btn-editar" 
+                                onclick="abrirModalEditar({{ $empleado->id }})"
+                                style="background-color: blue; color: white; border: 1px solid blue; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                                Editar
+                            </button>
+                            @php
+                                $colorClass = $empleado->estado === 'activo' ? 'btn-rojo' : 'btn-verde';
+                            @endphp
+                            <form method="POST" action="{{ route('empleados.disable', $empleado->id) }}" style="display:inline;">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="btn-deshabilitar {{ $colorClass }}">
+                                    {{ $empleado->estado === 'activo' ? 'Deshabilitar' : 'Habilitar' }}
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr id="sin-resultados">
+                        <td colspan="5" class="py-4 text-gray-500">
+                            No hay empleados registrados.
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

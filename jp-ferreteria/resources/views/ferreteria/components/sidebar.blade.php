@@ -49,6 +49,17 @@
         <!-- Ruta para Categoría (visible para todos los usuarios) -->
         <li><a href="{{ route('category.index') }}" class="sidebar-link">Categoría</a></li>
 
+        <!-- Ruta para Alertas (visible para usuarios con permiso 'view_alerts') -->
+        @can('view_alerts')
+        <li>
+            <a href="{{ route('admin.alertas') }}" class="sidebar-link flex items-center">
+                Alertas
+                <span id="alertas-badge" class="ml-2 inline-block bg-red-500 text-white text-xs px-2 py-1 rounded-full"
+                    style="display:none;">0</span>
+            </a>
+        </li>
+        @endcan
+
         <!-- Botón para cerrar sesión -->
         <li>
             <form method="POST" action="{{ route('logout') }}" class="w-full">
