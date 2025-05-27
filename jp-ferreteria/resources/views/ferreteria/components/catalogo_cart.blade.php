@@ -1,4 +1,4 @@
-<div id="cart-container" class="fixed bottom-0 right-0 mb-4 mr-4 w-80 bg-white rounded-lg shadow-xl z-50 hidden">
+<div id="cart-modal" class="fixed bottom-0 right-0 mb-4 mr-4 w-80 bg-white rounded-lg shadow-xl z-50 hidden">
     <div id="cart-header" class="bg-blue-500 text-white p-3 rounded-t-lg flex justify-between items-center cursor-pointer" onclick="toggleCart()">
         <h3 class="font-bold">Carrito de Compras</h3>
         <div class="flex items-center">
@@ -9,6 +9,7 @@
         </div>
     </div>
     <div id="cart-content" class="p-4 border border-t-0 rounded-b-lg max-h-96 overflow-y-auto">
+        <div id="drafts-list" class="mb-4"></div>
         <div id="cart-items" class="mb-4">
             <p class="text-gray-500 text-center py-4">El carrito está vacío</p>
         </div>

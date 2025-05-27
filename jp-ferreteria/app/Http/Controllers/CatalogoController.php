@@ -96,7 +96,7 @@ class CatalogoController extends Controller
                             $twilio->messages->create(
                                 env('ALERTA_SMS_TO'),
                                 [
-                                    "from" => env('TWILIO_FROM'),
+                                    "messagingServiceSid" => env('TWILIO_MESSAGING_SERVICE_SID'),
                                     "body" => "ALERTA TEMPRANA: El producto {$producto->NOMBRE_PRODUCTO} está cerca del stock mínimo."
                                 ]
                             );
@@ -126,7 +126,7 @@ class CatalogoController extends Controller
                             $twilio->messages->create(
                                 env('ALERTA_SMS_TO'),
                                 [
-                                    "from" => env('TWILIO_FROM'),
+                                    "messagingServiceSid" => env('TWILIO_MESSAGING_SERVICE_SID'),
                                     "body" => "ALERTA: El producto {$producto->NOMBRE_PRODUCTO} ha alcanzado el stock mínimo."
                                 ]
                             );

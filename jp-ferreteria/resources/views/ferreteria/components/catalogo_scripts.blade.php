@@ -215,59 +215,115 @@
     }
 
     // Abrir el modal de detalles del producto
-    function openProductDetailsModal(product) {
-        const modal = document.getElementById('product-details-modal');
-        const modalName = document.getElementById('modal-product-name');
-        const modalDescription = document.getElementById('modal-product-description');
-        const modalPrice = document.getElementById('modal-product-price');
-        const modalStock = document.getElementById('modal-product-stock');
-        const modalReference = document.getElementById('modal-product-reference');
-        const modalImages = document.getElementById('modal-product-images');
-        const modalThumbnails = document.getElementById('modal-product-thumbnails');
-        const addToCartButton = document.getElementById('add-to-cart-modal-btn');
+    function openProductDetailsModal(productId) {
+        fetch(`/productos/${productId}`)
+            .then(res => res.json())
+            .then(product => {
+                // Campos principales
+                const modalName = document.getElementById('modal-product-name');
+                if (modalName) modalName.textContent = product.NOMBRE_PRODUCTO || '';
 
-        // Actualizar contenido del modal
-        modalName.textContent = product.NOMBRE_PRODUCTO;
-        modalName.dataset.productId = product.ID_PRODUCTO;
-        modalDescription.textContent = product.DESCRIPCION || 'Sin descripción disponible.';
-        modalPrice.textContent = `Precio: $${product.PRECIO}`;
-        modalStock.textContent = `Cantidad disponible: ${product.CANTIDAD}`;
-        modalReference.textContent = `Referencia: ${product.REFERENCIA || 'N/A'}`;
+                const modalPrice = document.getElementById('modal-product-price');
+                if (modalPrice) modalPrice.textContent = `Precio: $${product.PRECIO}`;
 
-        // Mostrar solo la primera imagen como principal
-        const mainImage = product.fotos.length > 0 ? product.fotos[0].url_foto : 'https://via.placeholder.com/300';
-        modalImages.innerHTML = `
-            <img src="${mainImage}" 
-                 alt="Foto principal del producto" 
-                 class="w-full h-64 object-cover rounded">
-        `;
+                const modalStock = document.getElementById('modal-product-stock');
+                if (modalStock) modalStock.textContent = `Cantidad: ${product.CANTIDAD}`;
 
-        // Cargar miniaturas
-        modalThumbnails.innerHTML = product.fotos.map(foto => `
-            <img src="${foto.url_foto}" 
-                 alt="Miniatura del producto" 
-                 class="w-full h-20 object-cover rounded cursor-pointer hover:opacity-80"
-                 onclick="updateMainImage('${foto.url_foto}')">
-        `).join('');
+                const modalStockMin = document.getElementById('modal-product-stockmin');
+                if (modalStockMin) modalStockMin.textContent = product.STOCK_MINIMO ? `Stock mínimo: ${product.STOCK_MINIMO}` : '';
 
-        addToCartButton.dataset.productId = product.ID_PRODUCTO;
-        modal.classList.remove('hidden');
+                const modalCategory = document.getElementById('modal-product-category');
+                if (modalCategory) modalCategory.textContent = product.categoria ? `Categoría: ${product.categoria.NOMBRE_CATEGORIA}` : '';
+
+                const modalReference = document.getElementById('modal-product-reference');
+                if (modalReference) modalReference.textContent = `Referencia: ${product.REFERENCIA || 'N/A'}`;
+
+                const modalDescription = document.getElementById('modal-product-description');
+                if (modalDescription) modalDescription.textContent = product.DESCRIPCION || '';
+
+                // Detalles adicionales
+                const modalBrand = document.getElementById('modal-product-brand');
+                if (modalBrand) modalBrand.textContent = product.MARCA ? `Marca: ${product.MARCA}` : '';
+
+                const modalColor = document.getElementById('modal-product-color');
+                if (modalColor) modalColor.textContent = product.COLOR ? `Color: ${product.COLOR}` : '';
+
+                const modalUnidad = document.getElementById('modal-product-unidad');
+                if (modalUnidad) modalUnidad.textContent = product.UNIDAD_MEDIDA ? `Unidad: ${product.UNIDAD_MEDIDA}` : '';
+
+                const modalMaterial = document.getElementById('modal-product-material');
+                if (modalMaterial) modalMaterial.textContent = product.MATERIAL ? `Material: ${product.MATERIAL}` : '';
+
+                const modalDimensiones = document.getElementById('modal-product-dimensiones');
+                if (modalDimensiones) modalDimensiones.textContent = product.DIMENSIONES ? `Dimensiones: ${product.DIMENSIONES}` : '';
+
+                const modalUso = document.getElementById('modal-product-uso');
+                if (modalUso) modalUso.textContent = product.USO ? `Uso: ${product.USO}` : '';
+
+                const modalNorma = document.getElementById('modal-product-norma');
+                if (modalNorma) modalNorma.textContent = product.NORMA ? `Norma: ${product.NORMA}` : '';
+
+                const modalProcedencia = document.getElementById('modal-product-procedencia');
+                if (modalProcedencia) modalProcedencia.textContent = product.PROCEDENCIA ? `Procedencia: ${product.PROCEDENCIA}` : '';
+
+                // Oferta y más vendido
+                const oferta = document.getElementById('modal-product-oferta');
+                if (oferta) oferta.classList.toggle('hidden', !product.OFERTA);
+
+                const masVendido = document.getElementById('modal-product-masvendido');
+                if (masVendido) masVendido.classList.toggle('hidden', !product.MAS_VENDIDO);
+
+                const modalPrecioOferta = document.getElementById('modal-product-preciooferta');
+                if (modalPrecioOferta) modalPrecioOferta.textContent = product.PRECIO_OFERTA ? `Precio oferta: $${product.PRECIO_OFERTA}` : '';
+
+                const modalCuotas = document.getElementById('modal-product-cuotas');
+                if (modalCuotas) modalCuotas.textContent = product.CUOTAS ? `Cuotas: ${product.CUOTAS}` : '';
+
+                const modalCuotaValor = document.getElementById('modal-product-cuotavalor');
+                if (modalCuotaValor) modalCuotaValor.textContent = product.CUOTA_VALOR ? `Valor por cuota: $${product.CUOTA_VALOR}` : '';
+
+                // Características principales
+                const caracteristicas = document.getElementById('modal-product-caracteristicas');
+                if (caracteristicas) {
+                    caracteristicas.innerHTML = product.CARACTERISTICAS
+                        ? product.CARACTERISTICAS.split('\n').map(c => `<li>${c}</li>`).join('')
+                        : '';
+                }
+
+                // Imagen principal
+                const img = document.getElementById('modal-product-image');
+                if (img) img.src = (product.fotos && product.fotos.length > 0) ? product.fotos[0].url_foto : 'https://via.placeholder.com/300';
+
+                // Miniaturas
+                const thumbnails = document.getElementById('modal-product-thumbnails');
+                if (thumbnails && product.fotos && product.fotos.length > 1) {
+                    thumbnails.innerHTML = product.fotos.map((foto, idx) => `
+                        <img src="${foto.url_foto}" 
+                             alt="Miniatura del producto" 
+                             class="w-16 h-16 object-cover rounded cursor-pointer border ${idx === 0 ? 'border-blue-500' : 'border-gray-300'}"
+                             onclick="updateMainImage('${foto.url_foto}')">
+                    `).join('');
+                } else if (thumbnails) {
+                    thumbnails.innerHTML = '';
+                }
+
+                // Mostrar el modal
+                const modal = document.getElementById('product-modal');
+                if (modal) modal.classList.remove('hidden');
+            });
     }
 
     // Actualizar la imagen principal al hacer clic en una miniatura
     function updateMainImage(imageUrl) {
-        const modalImages = document.getElementById('modal-product-images');
-        modalImages.innerHTML = `
-            <img src="${imageUrl}" 
-                 alt="Foto principal del producto" 
-                 class="w-full h-64 object-cover rounded">
-        `;
+        const img = document.getElementById('modal-product-image');
+        if (img) img.src = imageUrl;
     }
+    window.updateMainImage = updateMainImage;
 
     // Cerrar el modal de detalles del producto
     function closeProductDetailsModal() {
-        const modal = document.getElementById('product-details-modal');
-        modal.classList.add('hidden');
+        const modal = document.getElementById('product-modal');
+        if (modal) modal.classList.add('hidden');
     }
 
     // Finalizar compra
@@ -304,14 +360,22 @@
 
             const result = await response.json();
             if (result.success) {
-                showAlert(result.message);
                 cart.items = [];
                 cart.total = 0;
                 updateCartUI();
                 toggleCartModal();
 
+                // Limpiar campos del cliente
+                document.getElementById('client-name').value = '';
+                document.getElementById('client-id').value = '';
+                document.getElementById('client-email').value = '';
+                document.getElementById('client-address').value = '';
+                document.getElementById('client-phone').value = '';
+
                 // Eliminar el borrador después de finalizar la compra
                 clearDraft();
+
+                showAlert(result.message);
             } else {
                 showAlert(result.message || 'Error al finalizar la compra.');
             }
@@ -322,19 +386,37 @@
     }
 
     function saveDraft() {
+        const drafts = JSON.parse(localStorage.getItem('drafts')) || [];
+        const name = document.getElementById('client-name').value || 'Sin nombre';
+        const id = Date.now().toString(); // identificador único
         const draft = {
-            cart: cart,
+            id,
+            name,
+            cart: JSON.parse(JSON.stringify(cart)),
             client: {
-                name: document.getElementById('client-name').value,
+                name,
                 id: document.getElementById('client-id').value,
                 email: document.getElementById('client-email').value,
                 address: document.getElementById('client-address').value,
                 phone: document.getElementById('client-phone').value,
-            }
+            },
+            fecha: new Date().toLocaleString()
         };
-
-        localStorage.setItem('draft', JSON.stringify(draft));
+        drafts.push(draft);
+        localStorage.setItem('drafts', JSON.stringify(drafts));
         showAlert('Borrador guardado correctamente.');
+        // Limpia el carrito y los campos
+        cart.items = [];
+        cart.total = 0;
+        updateCartUI();
+        ['client-name','client-id','client-email','client-address','client-phone'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+        });
+        renderDraftsList();
+        // Mostrar el modal del carrito después de guardar
+        const cartModal = document.getElementById('cart-modal');
+        if (cartModal) cartModal.classList.remove('hidden');
     }
 
     function loadDraft() {
@@ -359,9 +441,6 @@
         localStorage.removeItem('draft');
         showAlert('Borrador eliminado correctamente.');
     }
-
-    // Cargar borrador al cargar la página
-    document.addEventListener('DOMContentLoaded', loadDraft);
 
     // Asignar funcionalidad al botón de guardar borrador
     document.getElementById('save-draft-btn').addEventListener('click', saveDraft);
@@ -418,19 +497,72 @@
             // Si el campo de búsqueda está vacío, mostrar todas las tarjetas
             if (searchTerm === '') {
                 productCards.forEach(card => {
-                    card.style.display = 'flex';
+                    card.style.display = 'flex'; // Mostrar todas las tarjetas
                 });
             }
         });
     });
 
-    function removeFromCart(productId) {
-        showAlert('¿Estás seguro de que deseas eliminar este producto del carrito?', () => {
-            const productIndex = cart.items.findIndex(item => item.ID_PRODUCTO === productId);
-            if (productIndex !== -1) {
-                cart.items.splice(productIndex, 1); // Eliminar el producto del carrito
-                updateCartUI(); // Actualizar la interfaz del carrito
-            }
-        });
+    window.openProductDetailsModal = openProductDetailsModal;
+    window.closeModal = closeProductDetailsModal;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById('product-modal');
+        if (modal) {
+            modal.addEventListener('click', function (e) {
+                // Solo cerrar si el click es en el fondo, no en el contenido
+                if (e.target === modal) {
+                    closeProductDetailsModal();
+                }
+            });
+        }
+    });
+
+    function renderDraftsList() {
+        const drafts = JSON.parse(localStorage.getItem('drafts')) || [];
+        const draftsList = document.getElementById('drafts-list');
+        if (!draftsList) return;
+        if (drafts.length === 0) {
+            draftsList.innerHTML = '<p class="text-gray-400 text-sm">No hay borradores guardados.</p>';
+            return;
+        }
+        draftsList.innerHTML = drafts.map(draft => `
+            <div class="flex items-center justify-between bg-gray-100 rounded p-2 mb-2">
+                <div>
+                    <span class="font-bold">${draft.name}</span>
+                    <span class="text-xs text-gray-500 ml-2">${draft.fecha}</span>
+                </div>
+                <div>
+                    <button onclick="loadDraftById('${draft.id}')" class="text-blue-600 hover:underline mr-2">Cargar</button>
+                    <button onclick="deleteDraftById('${draft.id}')" class="text-red-600 hover:underline">Eliminar</button>
+                </div>
+            </div>
+        `).join('');
     }
+    window.renderDraftsList = renderDraftsList;
+
+    function loadDraftById(id) {
+        const drafts = JSON.parse(localStorage.getItem('drafts')) || [];
+        const draft = drafts.find(d => d.id === id);
+        if (!draft) return;
+        cart = draft.cart;
+        updateCartUI();
+        Object.entries(draft.client).forEach(([key, value]) => {
+            const el = document.getElementById('client-' + key);
+            if (el) el.value = value || '';
+        });
+        showAlert('Borrador cargado correctamente.');
+    }
+
+    function deleteDraftById(id) {
+        let drafts = JSON.parse(localStorage.getItem('drafts')) || [];
+        drafts = drafts.filter(d => d.id !== id);
+        localStorage.setItem('drafts', JSON.stringify(drafts));
+        renderDraftsList();
+        showAlert('Borrador eliminado correctamente.');
+    }
+    window.loadDraftById = loadDraftById;
+    window.deleteDraftById = deleteDraftById;
+
+    document.addEventListener('DOMContentLoaded', renderDraftsList);
 </script>

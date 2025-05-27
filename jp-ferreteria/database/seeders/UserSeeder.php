@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
@@ -24,6 +25,8 @@ class UserSeeder extends Seeder
             'view_delivery_order', 'create_delivery_order', 'edit_delivery_order', 'disable_delivery_order',
 
             'view_bill', 'create_bill', 'edit_bill', 'disable_bill',
+
+            'view_alerts', // <--- Agrega este permiso
         ];
 
         foreach ($permissions as $permission) {
@@ -41,6 +44,7 @@ class UserSeeder extends Seeder
             'view_users', 'create_users', 'edit_users', 'disable_users',
             'view_products', 'create_products', 'edit_products', 'disable_products',
             'view_categories', 'create_categories', 'edit categories', 'disable_categories',
+            'view_alerts', // <--- Agrega este permiso
         ]);
 
         // Asignar permisos al rol caja
@@ -83,5 +87,21 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
         $domiciliarioUser->assignRole($roleDomiciliario);
+
+        // Insertar estados de orden
+        DB::table('estado_orden')->insert([
+            [
+                'NOMBRE_ESTADO_ORDEN' => 'No_Entregado',
+                'DESCRIPCION' => 'Producto que aun no ha sido entregado',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'NOMBRE_ESTADO_ORDEN' => 'Entregado',
+                'DESCRIPCION' => 'Producto que ya ha sido entregado',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }

@@ -44,7 +44,7 @@ body {
 }
 
 .orden-cola-container {
-    @apply w-[260px] h-[350px] bg-white rounded-lg shadow-[0px_4px_8px_0px_rgba(0,0,0,0.10)] border border-neutral-200 p-4;
+    @apply w-[260px] h-[350px] bg-white rounded-lg shadow-[0px_4px_8px_0px_rgba(0,0,0,0.10)] border border-neutral-200 p-4 mx-auto;
 }
 
 .orden-cola-title {
@@ -56,7 +56,7 @@ body {
 }
 
 .orden-activa-container {
-    @apply w-[260px] h-[350px] bg-white rounded-lg shadow-[0px_4px_8px_0px_rgba(0,0,0,0.10)] border border-neutral-200 p-4;
+    @apply w-[260px] h-[350px] bg-white rounded-lg shadow-[0px_4px_8px_0px_rgba(0,0,0,0.10)] border border-neutral-200 p-4 mx-auto;
 }
 
 .orden-activa-title {

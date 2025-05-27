@@ -27,6 +27,10 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="mt-6 bg-blue-50 border border-blue-200 text-blue-800 p-4 rounded flex items-center justify-between">
+            <span>Para solucionar las alertas, agrega más productos o repón el inventario.</span>
+            <a href="{{ route('admin.product') }}" class="ml-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Ir a productos</a>
+        </div>
     @else
         <div class="bg-yellow-100 text-yellow-800 p-4 rounded">
             No hay alertas de inventario pendientes.

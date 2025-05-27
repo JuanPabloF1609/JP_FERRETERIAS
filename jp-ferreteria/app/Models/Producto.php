@@ -20,6 +20,21 @@ class Producto extends Model
         'ID_CATEGORIA',
         'REFERENCIA',
         'DESCRIPCION',
+        'MARCA',
+        'COLOR',
+        'UNIDAD_MEDIDA',
+        'MATERIAL',
+        'DIMENSIONES',
+        'USO',
+        'NORMA',
+        'PROCEDENCIA',
+        'OFERTA',
+        'PRECIO_OFERTA',
+        'CUOTAS',
+        'CUOTA_VALOR',
+        'MAS_VENDIDO',
+        'CARACTERISTICAS',
+        'ESTADO',
     ];
 
     public function categoria()

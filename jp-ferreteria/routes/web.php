@@ -8,6 +8,11 @@ use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
+
+// Rutas públicas
+Route::get('/productos/stocks', [ProductoController::class, 'stocks'])->name('productos.stocks');
+Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
+
 Route::get('/', function () {
     return redirect()->route('login');
 })->name('home');
@@ -42,13 +47,15 @@ Route::middleware(['auth', 'can:view_admin_dashboard'])->group(function () {
     Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
     Route::get('/productos/buscar', [ProductoController::class, 'buscar']);
     Route::put('/productos/{producto}/disable', [ProductoController::class, 'disable'])->name('productos.disable');
-    Route::get('/productos/{producto}', [ProductoController::class, 'show'])->name('productos.show');
     Route::put('/productos/{producto}', [ProductoController::class, 'update'])->name('productos.update');
     Route::put('/productos/{producto}/enable', [ProductoController::class, 'enable'])->name('productos.enable');
     Route::patch('/empleados/{id}', [EmpleadoController::class, 'update'])->name('empleados.update');
     Route::patch('/empleados/{id}/disable', [EmpleadoController::class, 'disable'])->name('empleados.disable');
     Route::get('/empleados/{id}', [EmpleadoController::class, 'show']);
-    Route::get('/admin/alertas', [AdminController::class, 'alertas'])->name('admin.alertas');
+    Route::get('/admin/alertas', [\App\Http\Controllers\AdminController::class, 'alertasVista'])->name('admin.alertas');
+    Route::get('/admin/alertas-pendientes', [\App\Http\Controllers\AdminController::class, 'alertasPendientes'])
+    ->name('admin.alertasPendientes')
+    ->middleware('auth');
 });
 
 //Rutas para las vistas de caja
