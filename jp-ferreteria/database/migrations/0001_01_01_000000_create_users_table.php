@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->string('estado')->default('activo');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -45,5 +46,9 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('estado');
+        });
     }
 };
