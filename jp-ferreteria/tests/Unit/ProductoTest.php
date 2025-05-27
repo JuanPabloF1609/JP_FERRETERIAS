@@ -16,9 +16,10 @@ class ProductoTest extends TestCase
             'El modelo Producto debe tener la relación categoria()'
         );
     }
+
     public function test_producto_tiene_atributos_correctos()
     {
-        $producto = new Producto();
+        $producto = new \App\Models\Producto();
         $this->assertEquals('productos', $producto->getTable(), 'El nombre de la tabla debe ser "productos"');
         $this->assertEquals('ID_PRODUCTO', $producto->getKeyName(), 'La clave primaria debe ser "ID_PRODUCTO"');
         $this->assertEquals(
@@ -30,7 +31,21 @@ class ProductoTest extends TestCase
                 'ID_CATEGORIA',
                 'REFERENCIA',
                 'DESCRIPCION',
-                'activo'
+                'MARCA',
+                'COLOR',
+                'UNIDAD_MEDIDA',
+                'MATERIAL',
+                'DIMENSIONES',
+                'USO',
+                'NORMA',
+                'PROCEDENCIA',
+                'OFERTA',
+                'PRECIO_OFERTA',
+                'CUOTAS',
+                'CUOTA_VALOR',
+                'MAS_VENDIDO',
+                'CARACTERISTICAS',
+                'ESTADO'
             ],
             $producto->getFillable(),
             'Los atributos rellenables deben ser correctos'

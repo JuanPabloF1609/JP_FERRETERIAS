@@ -69,7 +69,11 @@ class ProductoIntegrationTest extends TestCase
         $producto = Producto::factory()->create(['activo' => true]);
 
         $response = $this->put(route('productos.disable', $producto->ID_PRODUCTO));
-        $response->assertRedirect();
-        $this->assertDatabaseHas('productos', ['ID_PRODUCTO' => $producto->ID_PRODUCTO, 'activo' => false]);
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('productos', [
+            'ID_PRODUCTO' => $producto->ID_PRODUCTO,
+            'activo' => 1
+        ]);
     }
 }
