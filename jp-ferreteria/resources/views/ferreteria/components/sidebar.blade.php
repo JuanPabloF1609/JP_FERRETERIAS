@@ -45,9 +45,11 @@
         @can('view_caja_dashboard')
         <li><a href="{{ route('catalogo.index') }}" class="sidebar-link">Catalogo</a></li>
         @endcan
-
+        
         <!-- Ruta para Categoría (visible para todos los usuarios) -->
+        @can('view_admin_dashboard')
         <li><a href="{{ route('category.index') }}" class="sidebar-link">Categoría</a></li>
+        @endcan
 
         <!-- Ruta para Alertas (visible para usuarios con permiso 'view_alerts') -->
         @can('view_alerts')
