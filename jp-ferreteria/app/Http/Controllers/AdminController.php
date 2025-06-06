@@ -11,13 +11,18 @@ class AdminController extends Controller
      */
     public function index()
     {
-        
-        // Si no tienes los modelos o las métricas reales, puedes usar datos estáticos por ahora
+        $ventasHoy = \App\Models\Factura::whereDate('created_at', today())->count();
+        $productosVendidos = \App\Models\Factura::with('productos')->get()->sum(function($factura) {
+            return $factura->productos->sum('pivot.CANTIDAD');
+        });
+        $inventarioBajo = \App\Models\Producto::whereColumn('CANTIDAD', '<=', 'STOCK_MINIMO')->count();
+        $clientesNuevos = \App\Models\Cliente::whereDate('created_at', today())->count();
+
         $estadisticas = [
-            'usuarios_activos' => 25,
-            'ventas_totales' => 1250,
-            'productos_activos' => 180,
-            'ordenes_pendientes' => 10,
+            'ventas_hoy' => $ventasHoy,
+            'productos_vendidos' => $productosVendidos,
+            'inventario_bajo' => $inventarioBajo,
+            'clientes_nuevos' => $clientesNuevos,
         ];
 
         return view('ferreteria.products.dash_admin', compact('estadisticas'));

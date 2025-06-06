@@ -170,7 +170,12 @@ class CatalogoController extends Controller
                 'DIRECCION_ENTREGA' => $validated['address'] ?? $cliente->DIRECCION_CLIENTE,
             ]);
 
-            return response()->json(['success' => true, 'message' => 'Compra finalizada y orden de entrega creada correctamente.']);
+            // DEVOLVER EL CARRITO PARA ACTUALIZAR EL STOCK EN EL FRONTEND
+            return response()->json([
+                'success' => true,
+                'message' => 'Compra finalizada y orden de entrega creada correctamente.',
+                'cart' => $validated['cart'] // Aquí se envía el carrito vendido
+            ]);
         } catch (\Exception $e) {
             \Log::error('Error en finalizarCompra: ' . $e->getMessage());
             return response()->json([
