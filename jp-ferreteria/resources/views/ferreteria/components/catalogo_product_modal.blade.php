@@ -53,7 +53,7 @@
             </div>
         </div>
         <div class="border-t p-4 flex justify-end">
-            <button onclick="addModalProductToCart()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded">
+            <button onclick="addToCartFromModal()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded">
                 Agregar al Carrito
             </button>
         </div>
